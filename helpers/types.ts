@@ -9,6 +9,7 @@ export enum eTenderly {
 }
 
 export type eNetwork =
+  | eBaseNetwork
   | eEthereumNetwork
   | ePolygonNetwork
   | eXDaiNetwork
@@ -18,7 +19,7 @@ export type eNetwork =
   | eFantomNetwork
   | eOptimismNetwork
   | eTenderlyNetwork
-  | eBaseNetwork;
+  | eBobNetwork;
 
 type eTenderlyNetwork = "tenderly";
 
@@ -53,6 +54,11 @@ export enum eBaseNetwork {
 export enum ePolygonNetwork {
   polygon = "polygon",
   mumbai = "mumbai",
+}
+
+export enum eBobNetwork {
+  main = "bob",
+  testnet = "bob-sepolia",
 }
 
 export enum eXDaiNetwork {

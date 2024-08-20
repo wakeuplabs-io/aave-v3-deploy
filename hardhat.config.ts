@@ -15,6 +15,7 @@ import {
   eOptimismNetwork,
   ePolygonNetwork,
   eBaseNetwork,
+  eBobNetwork,
 } from "./helpers/types";
 import { DEFAULT_NAMED_ACCOUNTS } from "./helpers/constants";
 
@@ -66,6 +67,7 @@ export default {
       url: "http://127.0.0.1:8545",
       ...hardhatNetworkSettings,
     },
+    [eBobNetwork.testnet]: getCommonNetworkConfig(eBobNetwork.testnet, 111),
     tenderly: getCommonNetworkConfig("tenderly", 1),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
@@ -215,6 +217,14 @@ export default {
         urls: {
           apiURL: "https://api.basescan.org/api",
           browserURL: "https://basescan.org/",
+        },
+      },
+      {
+        network: eBobNetwork.testnet,
+        chainId: 111,
+        urls: {
+          apiURL: "https://testnet-explorer.gobob.xyz/api",
+          browserURL: "https://testnet-explorer.gobob.xyz/",
         },
       },
     ],
