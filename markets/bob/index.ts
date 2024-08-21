@@ -37,14 +37,6 @@ export const BobConfig: IAaveConfiguration = {
     },
   },
   EModes: {
-    StableEMode: {
-      id: "1",
-      ltv: "9700",
-      liquidationThreshold: "9750",
-      liquidationBonus: "10100",
-      label: "Stablecoins",
-      assets: ["USDC", "DAI"],
-    },
   },
   ChainlinkAggregator: {
     [eBobNetwork.testnet]: {
