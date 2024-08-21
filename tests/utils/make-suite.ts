@@ -6,7 +6,7 @@ import {
 import { Signer } from "ethers";
 import { evmRevert, evmSnapshot } from "../../helpers/utilities/tx";
 import { tEthereumAddress } from "../../helpers/types";
-import { Pool } from "../../typechain";
+import { Pool, UiPoolDataProviderV3 } from "../../typechain";
 import { AaveProtocolDataProvider } from "../../typechain";
 import { AToken } from "../../typechain";
 import { PoolConfigurator } from "../../typechain";
@@ -20,7 +20,7 @@ import {
   StableDebtToken,
   VariableDebtToken,
   WETH9,
-  WrappedTokenGateway,
+  WrappedTokenGatewayV3,
   Faucet,
 } from "../../typechain";
 import {
@@ -68,8 +68,9 @@ export interface TestEnv {
   aave: IERC20;
   addressesProvider: PoolAddressesProvider;
   registry: PoolAddressesProviderRegistry;
-  wrappedTokenGateway: WrappedTokenGateway;
+  wrappedTokenGateway: WrappedTokenGatewayV3;
   faucetOwnable: Faucet;
+  uiPoolDataProvider: UiPoolDataProviderV3;
 }
 
 let HardhatSnapshotId: string = "0x1";
@@ -98,7 +99,7 @@ const testEnv: TestEnv = {
   aave: {} as IERC20,
   addressesProvider: {} as PoolAddressesProvider,
   registry: {} as PoolAddressesProviderRegistry,
-  wrappedTokenGateway: {} as WrappedTokenGateway,
+  wrappedTokenGateway: {} as WrappedTokenGatewayV3,
   faucetOwnable: {} as Faucet,
 } as TestEnv;
 
@@ -128,6 +129,9 @@ export async function initializeMakeSuite() {
   const addressesProviderArtifact = await deployments.get(
     POOL_ADDRESSES_PROVIDER_ID
   );
+  const addressesPoolDataProviderArtifact = await deployments.get(
+    "UiPoolDataProviderV3"
+  );
   const addressesProviderRegistryArtifact = await deployments.get(
     "PoolAddressesProviderRegistry"
   );
@@ -141,7 +145,7 @@ export async function initializeMakeSuite() {
   testEnv.wrappedTokenGateway = (await ethers.getContractAt(
     "WrappedTokenGatewayV3",
     wrappedTokenGatewayArtifact.address
-  )) as WrappedTokenGateway;
+  )) as WrappedTokenGatewayV3;
   testEnv.pool = (await ethers.getContractAt(
     "Pool",
     poolArtifact.address
@@ -153,14 +157,15 @@ export async function initializeMakeSuite() {
   )) as PoolConfigurator;
 
   testEnv.addressesProvider = (await ethers.getContractAt(
-    "PoolAddressesProvider",
-    addressesProviderArtifact.address
+    "PoolAddressesProvider", addressesProviderArtifact.address
   )) as PoolAddressesProvider;
 
-  testEnv.registry = (await ethers.getContractAt(
-    "PoolAddressesProviderRegistry",
-    addressesProviderRegistryArtifact.address
-  )) as PoolAddressesProviderRegistry;
+  testEnv.uiPoolDataProvider = (await ethers.getContractAt(
+    "UiPoolDataProviderV3",
+    addressesPoolDataProviderArtifact.address
+  )) as UiPoolDataProviderV3;
+
+  testEnv.registry = (await ethers.getContractAt("PoolAddressesProviderRegistry", addressesProviderRegistryArtifact.address)) as PoolAddressesProviderRegistry;
   testEnv.oracle = (await ethers.getContractAt(
     "AaveOracle",
     priceOracleArtifact.address
@@ -178,7 +183,6 @@ export async function initializeMakeSuite() {
   const aUsdcAddress = allTokens.find(
     (aToken) => aToken.symbol === "aEthUSDC"
   )?.tokenAddress;
-
   const aWEthAddress = allTokens.find(
     (aToken) => aToken.symbol === "aEthWETH"
   )?.tokenAddress;
@@ -205,7 +209,7 @@ export async function initializeMakeSuite() {
   if (!aDaiAddress || !aWEthAddress || !aUsdcAddress) {
     process.exit(1);
   }
-  if (!daiAddress || !usdcAddress || !aaveAddress || !wethAddress) {
+  if (!daiAddress || !usdcAddress || !wethAddress) {
     process.exit(1);
   }
 
@@ -217,7 +221,6 @@ export async function initializeMakeSuite() {
 
   testEnv.dai = await getERC20(daiAddress);
   testEnv.usdc = await getERC20(usdcAddress);
-  testEnv.aave = await getERC20(aaveAddress);
   testEnv.weth = await getWETH(wethAddress);
 
   if (isTestnetMarket(poolConfig)) {
