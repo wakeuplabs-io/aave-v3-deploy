@@ -102,7 +102,7 @@ makeSuite("Pool", (testEnv: TestEnv) => {
     const { deployer, users, dai, usdc, aUsdc, pool, stableDebtUsdc } = testEnv;
     
     const supplySize = BigNumber.from(parseEther("1"));
-    const borrowSize = BigNumber.from(parseEther("0.5"));
+    const borrowSize = BigNumber.from(parseEther("0.00000005"));
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
     const user = users[1];
 

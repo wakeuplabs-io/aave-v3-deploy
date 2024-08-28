@@ -22,7 +22,7 @@ export const BobConfig: IAaveConfiguration = {
     [eBobNetwork.testnet]: {
       USDC: "0x509AeFe02953BC2fB8abCa53Fd83C94D86c05922",
       DAI: "0x4e4e256D3a9789329AB540a7a3b2cd0c03C40431",
-      WETH: "0x936EA1bCF82Fbc1Dbe24c6AA140f136A7De15C2E",
+      WETH: "0x5546cB953770BA6Aa78FdbaEFB3450F87d97dDBC",
     },
   },
   EModes: {

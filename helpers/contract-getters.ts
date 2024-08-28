@@ -182,14 +182,6 @@ export const getAaveOracle = async (
     address || (await hre.deployments.get(ORACLE_ID)).address
   );
 
-export const getFallbackOracle = async (
-  address?: tEthereumAddress
-): Promise<CustomPriceOracle> =>
-  getContract(
-    "contracts/oracle/PriceOracle.sol:PriceOracle",
-    address || (await hre.deployments.get(FALLBACK_ORACLE_ID)).address
-  );
-
 export const getMockFlashLoanReceiver = async (
   address?: tEthereumAddress
 ): Promise<MockFlashLoanReceiver> =>
@@ -349,10 +341,11 @@ export const getEmissionManager = async (address?: tEthereumAddress) =>
       address || (await hre.deployments.get(FALLBACK_ORACLE_ID)).address
     );
 
+    const signer = await getFirstSigner();
     return new hre.ethers.Contract(
       fallbackOracle.address,
       PriceOracle__factory.abi,
-      await getFirstSigner()
+      signer
     );  
   }
 
