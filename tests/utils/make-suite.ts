@@ -6,12 +6,12 @@ import {
 import { Signer } from "ethers";
 import { evmRevert, evmSnapshot } from "../../helpers/utilities/tx";
 import { tEthereumAddress } from "../../helpers/types";
-import { Pool, UiPoolDataProviderV3 } from "../../typechain";
+import { IPriceOracle, Pool, UiPoolDataProviderV3 } from "../../typechain";
 import { AaveProtocolDataProvider } from "../../typechain";
 import { AToken } from "../../typechain";
 import { PoolConfigurator } from "../../typechain";
 
-import chai from "chai";
+import { parseEther } from "ethers/lib/utils";
 import { PoolAddressesProvider } from "../../typechain";
 import { PoolAddressesProviderRegistry } from "../../typechain";
 import {
@@ -24,6 +24,7 @@ import {
   Faucet,
 } from "../../typechain";
 import {
+  FALLBACK_ORACLE_ID,
   ORACLE_ID,
   POOL_ADDRESSES_PROVIDER_ID,
   POOL_CONFIGURATOR_PROXY_ID,
@@ -59,11 +60,14 @@ export interface TestEnv {
   helpersContract: AaveProtocolDataProvider;
   weth: WETH9;
   aWETH: AToken;
+  variableDebtWeth: VariableDebtToken;
   dai: IERC20;
   aDai: AToken;
   variableDebtDai: VariableDebtToken;
   stableDebtDai: StableDebtToken;
   aUsdc: AToken;
+  variableDebtUsdc: VariableDebtToken;
+  stableDebtUsdc: StableDebtToken;
   usdc: IERC20;
   aave: IERC20;
   addressesProvider: PoolAddressesProvider;
@@ -90,6 +94,7 @@ const testEnv: TestEnv = {
   oracle: {} as AaveOracle,
   weth: {} as WETH9,
   aWETH: {} as AToken,
+  variableDebtWeth: {} as VariableDebtToken,
   dai: {} as IERC20,
   aDai: {} as AToken,
   variableDebtDai: {} as VariableDebtToken,
@@ -199,12 +204,21 @@ export async function initializeMakeSuite() {
   const usdcAddress = reservesTokens.find(
     (token) => token.symbol === "USDC"
   )?.tokenAddress;
+  const {
+    variableDebtTokenAddress: variableDebtUsdcAddress,
+    stableDebtTokenAddress: stableDebtUsdcAddress,
+  } = await testEnv.helpersContract.getReserveTokensAddresses(usdcAddress || "");
+
   const aaveAddress = reservesTokens.find(
     (token) => token.symbol === "AAVE"
   )?.tokenAddress;
   const wethAddress = reservesTokens.find(
     (token) => token.symbol === "WETH"
   )?.tokenAddress;
+
+  const {
+    variableDebtTokenAddress: variableDebtWEthAddress,
+  } = await testEnv.helpersContract.getReserveTokensAddresses(wethAddress || "");
 
   if (!aDaiAddress || !aWEthAddress || !aUsdcAddress) {
     process.exit(1);
@@ -215,8 +229,11 @@ export async function initializeMakeSuite() {
 
   testEnv.aDai = await getAToken(aDaiAddress);
   testEnv.variableDebtDai = await getVariableDebtToken(variableDebtDaiAddress);
+  testEnv.variableDebtWeth = await getVariableDebtToken(variableDebtWEthAddress);
   testEnv.stableDebtDai = await getStableDebtToken(stableDebtDaiAddress);
   testEnv.aUsdc = await getAToken(aUsdcAddress);
+  testEnv.variableDebtUsdc = await getVariableDebtToken(variableDebtUsdcAddress);
+  testEnv.stableDebtUsdc = await getStableDebtToken(stableDebtUsdcAddress);
   testEnv.aWETH = await getAToken(aWEthAddress);
 
   testEnv.dai = await getERC20(daiAddress);
@@ -246,4 +263,30 @@ export function makeSuite(name: string, tests: (testEnv: TestEnv) => void) {
       await revertHead();
     });
   });
+}
+
+export async function ititializeOracle() {
+  const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
+
+  const prices = {
+    DAI: parseEther("1"),
+    USDC: parseEther("1"),
+    WETH: parseEther("2500"),
+  };
+
+  const addressesfallbackOracle = await deployments.get(
+    FALLBACK_ORACLE_ID
+  );
+
+  const fallbackOracle = (await ethers.getContractAt(
+    "contracts/oracle/PriceOracle.sol:PriceOracle",
+    addressesfallbackOracle.address
+  )) as IPriceOracle;
+
+
+  const promises = reservesTokens.map((token) => 
+    fallbackOracle.setAssetPrice(token.tokenAddress, prices[token.symbol as keyof typeof prices])
+  );
+
+  await Promise.all(promises);
 }

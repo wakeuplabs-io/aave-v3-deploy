@@ -8,10 +8,8 @@ makeSuite("Price Oracle", (testEnv: TestEnv) => {
   it("Check Assets price", async () => {
     const { weth, dai, usdc, oracle } = testEnv;
 
-    if (!weth || !oracle) {
-      console.error("weth or oracle not found in testEnv");
-      return;
-    }
+    expect(weth).to.not.be.undefined;
+    expect(oracle).to.not.be.undefined;
 
     const priceWETH = await oracle.getAssetPrice(weth.address);
     expect(priceWETH.gt(zero)).to.be.true;
