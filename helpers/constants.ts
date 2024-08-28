@@ -53,6 +53,11 @@ export const WRAPPED_NATIVE_TOKEN_PER_NETWORK: { [network: string]: string } = {
 export const ZERO_BYTES_32 =
   "0x0000000000000000000000000000000000000000000000000000000000000000";
 
+export const MOCK_FALLBACK_ORACLE_PRICES: { [key: string]: string } = {
+  USDC: parseUnits("1", 18).toString(),
+  DAI: parseUnits("1", 18).toString(),
+  WETH: parseUnits("2500", 18).toString(),
+}
 export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
   AAVE: parseUnits("300", 8).toString(),
   WETH: parseUnits("4000", 8).toString(),
@@ -147,7 +152,6 @@ export const POOL_ADMIN: Record<string, string> = {
   [eBaseNetwork.baseGoerli]: "0xA9F30e6ED4098e9439B2ac8aEA2d3fc26BcEbb45",
   [eEthereumNetwork.tenderly]: ETHEREUM_SHORT_EXECUTOR,
   [eBobNetwork.testnet]: "0xb7ba1Dea4a3745e58959a2091b47096cc197be5A",
-  // [eBobNetwork.testnet]: "", // needed 01_treasury (AaveEcosystemReserveController)
 };
 
 export const EMERGENCY_ADMIN: Record<string, string> = {

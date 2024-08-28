@@ -18,9 +18,6 @@ export const BobConfig: IAaveConfiguration = {
     USDC: strategyUSDC,
     WETH: strategyWETH,
   },
-  ReserveFactorTreasuryAddress: {
-    // [eBobNetwork.testnet]: "0xb7ba1Dea4a3745e58959a2091b47096cc197be5A", // config just mainnet. testnet is deployer (01_treasury.ts)
-  },
   ReserveAssets: {
     [eBobNetwork.testnet]: {
       USDC: "0x509AeFe02953BC2fB8abCa53Fd83C94D86c05922",
