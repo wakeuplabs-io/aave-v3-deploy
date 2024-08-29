@@ -7,6 +7,7 @@ import {
   ePolygonNetwork,
   TransferStrategy,
   eBaseNetwork,
+  eBobNetwork,
 } from "./../../helpers/types";
 import { ZERO_ADDRESS } from "../../helpers/constants";
 import {
@@ -161,6 +162,8 @@ export const CommonsConfig: ICommonConfiguration = {
     [eOptimismNetwork.testnet]: true,
     [eBaseNetwork.base]: true,
     [eBaseNetwork.baseGoerli]: true,
+    [eBobNetwork.testnet]: true,
+    [eBobNetwork.main]: true,
   },
   ParaswapRegistry: {
     [eEthereumNetwork.main]: "0xa68bEA62Dc4034A689AA0F58A76681433caCa663",

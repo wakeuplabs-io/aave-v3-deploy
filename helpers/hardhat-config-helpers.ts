@@ -12,6 +12,7 @@ import {
   eFantomNetwork,
   eOptimismNetwork,
   eBaseNetwork,
+  eBobNetwork,
 } from "./types";
 
 require("dotenv").config();
@@ -56,6 +57,8 @@ export const getAlchemyKey = (net: eNetwork) => {
 };
 
 export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
+  [eBobNetwork.testnet]: "https://testnet.rpc.gobob.xyz",
+  [eBobNetwork.main]: "https://rpc.gobob.xyz/",
   [eEthereumNetwork.kovan]: `https://eth-kovan.alchemyapi.io/v2/${getAlchemyKey(
     eEthereumNetwork.kovan
   )}`,
@@ -109,11 +112,14 @@ export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {
   [eFantomNetwork.main]: true,
   [eOptimismNetwork.main]: true,
   [eBaseNetwork.base]: true,
+  [eBobNetwork.main]: true,
+  [eBobNetwork.testnet]: true,
 };
 
 const GAS_PRICE_PER_NET: iParamsPerNetwork<string | number> = {
   [eArbitrumNetwork.goerliNitro]: 100000001,
   [eBaseNetwork.baseGoerli]: 8000000000,
+  [eBobNetwork.testnet]: 100000001,
 };
 
 export const buildForkConfig = ():
@@ -146,7 +152,7 @@ export const getCommonNetworkConfig = (
   chainId?: number
 ) => ({
   url: NETWORKS_RPC_URL[networkName] || "",
-  blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
+  blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT * 100,
   chainId,
   gasPrice: GAS_PRICE_PER_NET[networkName] || undefined,
   ...((!!MNEMONICS[networkName] || !!MNEMONIC) && {
