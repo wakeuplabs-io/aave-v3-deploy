@@ -32,7 +32,7 @@ export const strategyDAI: IReserveParams = {
   aTokenImpl: eContractid.AToken,
   reserveFactor: "1000",
   supplyCap: "0",
-  borrowCap: "500000000",
+  borrowCap: "0",
   debtCeiling: "0",
   borrowableIsolation: false,
 };
@@ -50,9 +50,9 @@ export const strategyUSDC: IReserveParams = {
   aTokenImpl: eContractid.AToken,
   reserveFactor: "1000",
   supplyCap: "2000000000",
-  borrowCap: "500000000",
-  debtCeiling: "500000000",
-  borrowableIsolation: false,
+  borrowCap: "0",
+  debtCeiling: "0",
+  borrowableIsolation: true,
 };
 
 export const strategyWETH: IReserveParams = {

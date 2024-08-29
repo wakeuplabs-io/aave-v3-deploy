@@ -22,7 +22,7 @@ makeSuite("Mainnet Check list", (testEnv: TestEnv) => {
   it("Deposit WETH", async () => {
     const { users, wrappedTokenGateway, aWETH, pool } = testEnv;
 
-    const user = users[1];
+    const user = users[0];
 
     // Deposit with native ETH
     await wrappedTokenGateway
@@ -38,7 +38,7 @@ makeSuite("Mainnet Check list", (testEnv: TestEnv) => {
   it("Withdraw WETH - Partial", async () => {
     const { users, wrappedTokenGateway, aWETH, pool } = testEnv;
 
-    const user = users[1];
+    const user = users[0];
     const priorEthersBalance = await user.signer.getBalance();
     const aTokensBalance = await aWETH.balanceOf(user.address);
 
@@ -81,7 +81,7 @@ makeSuite("Mainnet Check list", (testEnv: TestEnv) => {
   it("Withdraw WETH - Full", async () => {
     const { users, aWETH, wrappedTokenGateway, pool } = testEnv;
 
-    const user = users[1];
+    const user = users[0];
     const priorEthersBalance = await user.signer.getBalance();
     const aTokensBalance = await aWETH.balanceOf(user.address);
 

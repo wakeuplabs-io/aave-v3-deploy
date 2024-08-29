@@ -16,7 +16,6 @@ import {
   Pool,
   PoolAddressesProvider,
   PoolConfigurator,
-  PriceOracle,
   StableDebtToken,
   SupplyLogic,
   VariableDebtToken,
@@ -63,6 +62,9 @@ import { Libraries } from "hardhat-deploy/dist/types";
 import { getContract } from "./utilities/tx";
 import { EMISSION_MANAGER_ID } from ".";
 import { EmissionManager } from "../typechain";
+import { PriceOracle as CustomPriceOracle } from "../typechain/contracts/oracle/PriceOracle";
+import { IPriceOracle } from "../typechain/contracts/oracle";
+import { PriceOracle__factory } from "../typechain/factories/contracts/oracle";
 
 // Prevent error HH9 when importing this file inside tasks or helpers at Hardhat config load
 declare var hre: HardhatRuntimeEnvironment;
@@ -178,14 +180,6 @@ export const getAaveOracle = async (
   getContract(
     "AaveOracle",
     address || (await hre.deployments.get(ORACLE_ID)).address
-  );
-
-export const getFallbackOracle = async (
-  address?: tEthereumAddress
-): Promise<PriceOracle> =>
-  getContract(
-    "PriceOracle",
-    address || (await hre.deployments.get(FALLBACK_ORACLE_ID)).address
   );
 
 export const getMockFlashLoanReceiver = async (
@@ -340,6 +334,20 @@ export const getEmissionManager = async (address?: tEthereumAddress) =>
     "EmissionManager",
     address || (await hre.deployments.get(EMISSION_MANAGER_ID)).address
   );
+
+  export const getPriceOracleFallback = async (address?: tEthereumAddress) => {
+    const fallbackOracle = await getContract<IPriceOracle>(
+      "contracts/oracle/PriceOracle.sol:PriceOracle",
+      address || (await hre.deployments.get(FALLBACK_ORACLE_ID)).address
+    );
+
+    const signer = await getFirstSigner();
+    return new hre.ethers.Contract(
+      fallbackOracle.address,
+      PriceOracle__factory.abi,
+      signer
+    );  
+  }
 
 export const getOwnableContract = async (address: string) => {
   const ownableInterface = new hre.ethers.utils.Interface([
