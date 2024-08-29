@@ -98,7 +98,7 @@ makeSuite("Pool", (testEnv: TestEnv) => {
     expect(debtBalanceAfterPartialRepay).to.be.lt(debtBalance);
   });
 
-  it.only("Supply Stable DAI, borrow USDC and replay with DAI", async () => {
+  it("Supply Stable DAI, borrow USDC and replay with DAI", async () => {
     const { deployer, users, dai, usdc, aUsdc, pool, stableDebtUsdc } = testEnv;
     
     const supplySize = BigNumber.from(parseEther("1"));

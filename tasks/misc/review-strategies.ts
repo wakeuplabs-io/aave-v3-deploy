@@ -1,4 +1,4 @@
-import { eNetwork } from "./../../helpers/types";
+import { eNetwork } from "../../helpers/types";
 import { getFirstSigner } from "../../helpers/utilities/signer";
 import { loadPoolConfig } from "../../helpers/market-config-helpers";
 import {
@@ -18,26 +18,26 @@ import { DefaultReserveInterestRateStrategy } from "../../typechain";
 
 // This task will review the InterestRate strategy of each reserve from a Market passed by environment variable MARKET_NAME.
 // If the fix flag is present it will change the current strategy of the reserve to the desired strategy from market configuration.
-task(`review-rate-strategies`, ``)
+task(`review-strategies`, ``)
   // Flag to fix the reserve deploying a new InterestRateStrategy contract with the strategy from market configuration:
   // --fix
   .addFlag("fix")
   .addFlag("deploy")
   // Optional parameter to check only the desired tokens by symbol and separated by comma
   // --checkOnly DAI,USDC,ETH
-  .addOptionalParam("checkOnly")
+  .addOptionalParam("checkonly")
   .setAction(
     async (
       {
         fix,
         deploy,
-        checkOnly,
-      }: { fix: boolean; checkOnly: string; deploy: boolean },
+        checkonly,
+      }: { fix: boolean; checkonly: string; deploy: boolean },
       hre
     ) => {
       const network = FORK ? FORK : (hre.network.name as eNetwork);
       const { deployer, poolAdmin } = await hre.getNamedAccounts();
-      const checkOnlyReserves: string[] = checkOnly ? checkOnly.split(",") : [];
+      const checkOnlyReserves: string[] = checkonly ? checkonly.split(",") : [];
       const dataProvider = await getAaveProtocolDataProvider();
       const poolConfigurator = (await getPoolConfiguratorProxy()).connect(
         await hre.ethers.getSigner(poolAdmin)
@@ -53,6 +53,8 @@ task(`review-rate-strategies`, ``)
         : reserves;
 
       const normalizedSymbols = Object.keys(poolConfig.ReservesConfig);
+
+      console.log("reservesToCheck", reserves, reservesToCheck);
 
       for (let index = 0; index < reservesToCheck.length; index++) {
         const { symbol, tokenAddress } = reservesToCheck[index];
