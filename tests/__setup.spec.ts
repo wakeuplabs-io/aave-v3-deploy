@@ -6,7 +6,6 @@ before(async () => {
   await deployments.fixture();
 
   await initializeMakeSuite();
-  await ititializeOracle();
   console.log("\n***************");
   console.log("Setup finished");
   console.log("***************\n");

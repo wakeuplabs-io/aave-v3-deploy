@@ -17,6 +17,7 @@ interface ATokenConfig {
   incentives: string;
   pool: string;
   underlying: string;
+  address: string;
 }
 
 task(`review-atokens`)
@@ -50,6 +51,7 @@ task(`review-atokens`)
         incentives: await aToken.getIncentivesController(),
         underlying: await aToken.UNDERLYING_ASSET_ADDRESS(),
         pool: await aToken.POOL(),
+        address: aToken.address,
       };
     }
     if (log) {
