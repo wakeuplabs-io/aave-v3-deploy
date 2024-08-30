@@ -19,11 +19,20 @@ const func: DeployFunction = async function ({
     process.env.FORK ? process.env.FORK : hre.network.name
   ) as eNetwork;
 
-  if (!chainlinkAggregatorProxy[network]) {
+  let chainlinkProxy = chainlinkAggregatorProxy[network];
+  if (!chainlinkProxy) {
+    const chainlinkProxyDeploy = await deploy("CHAINLINK_BYPASS_ID", {
+      from: deployer,
+      args: [],
+      ...COMMON_DEPLOY_PARAMS,
+      contract: "contracts/chainlinkBypass/EAC.sol:EACAggregatorProxy",
+    });
+
+    chainlinkProxy = chainlinkProxyDeploy.address;
+
     console.log(
       '[Deployments] Skipping the deployment of UiPoolDataProvider due missing constant "chainlinkAggregatorProxy" configuration at ./helpers/constants.ts'
     );
-    return;
   }
   // Deploy UiIncentiveDataProvider getter helper
   await deploy("UiIncentiveDataProviderV3", {
@@ -34,8 +43,8 @@ const func: DeployFunction = async function ({
   await deploy("UiPoolDataProviderV3", {
     from: deployer,
     args: [
-      chainlinkAggregatorProxy[network],
-      chainlinkEthUsdAggregatorProxy[network],
+      chainlinkProxy,
+      chainlinkProxy,
     ],
     ...COMMON_DEPLOY_PARAMS,
   });
