@@ -59,6 +59,7 @@ export enum ePolygonNetwork {
 export enum eBobNetwork {
   main = "bob",
   testnet = "bob-sepolia",
+  testnet_new = "bob-sepolia-new",
 }
 
 export enum eXDaiNetwork {

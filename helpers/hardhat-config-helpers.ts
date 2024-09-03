@@ -58,6 +58,7 @@ export const getAlchemyKey = (net: eNetwork) => {
 
 export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eBobNetwork.testnet]: "https://testnet.rpc.gobob.xyz",
+  [eBobNetwork.testnet_new]: "https://bob-sepolia.rpc.gobob.xyz",
   [eBobNetwork.main]: "https://rpc.gobob.xyz/",
   [eEthereumNetwork.kovan]: `https://eth-kovan.alchemyapi.io/v2/${getAlchemyKey(
     eEthereumNetwork.kovan
@@ -114,12 +115,15 @@ export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {
   [eBaseNetwork.base]: true,
   [eBobNetwork.main]: true,
   [eBobNetwork.testnet]: true,
+  [eBobNetwork.testnet_new]: true,
 };
 
 const GAS_PRICE_PER_NET: iParamsPerNetwork<string | number> = {
   [eArbitrumNetwork.goerliNitro]: 100000001,
   [eBaseNetwork.baseGoerli]: 8000000000,
   [eBobNetwork.testnet]: 100000001,
+  [eBobNetwork.testnet_new]: 100000001,
+  [eBobNetwork.main]: 100000001,
 };
 
 export const buildForkConfig = ():

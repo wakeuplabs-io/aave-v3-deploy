@@ -67,7 +67,9 @@ export default {
       url: "http://127.0.0.1:8545",
       ...hardhatNetworkSettings,
     },
+    [eBobNetwork.main]: getCommonNetworkConfig(eBobNetwork.testnet, 60808),
     [eBobNetwork.testnet]: getCommonNetworkConfig(eBobNetwork.testnet, 111),
+    [eBobNetwork.testnet_new]: getCommonNetworkConfig(eBobNetwork.testnet_new, 808813),
     tenderly: getCommonNetworkConfig("tenderly", 1),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
@@ -225,6 +227,14 @@ export default {
         urls: {
           apiURL: "https://testnet-explorer.gobob.xyz/api",
           browserURL: "https://testnet-explorer.gobob.xyz/",
+        },
+      },
+      {
+        network: eBobNetwork.testnet_new,
+        chainId: 808813,
+        urls: {
+          apiURL: "https://bob-sepolia.explorer.gobob.xyz/api",
+          browserURL: "https://bob-sepolia.explorer.gobob.xyz/",
         },
       },
     ],

@@ -162,6 +162,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eOptimismNetwork.testnet]: true,
     [eBaseNetwork.base]: true,
     [eBaseNetwork.baseGoerli]: true,
+    [eBobNetwork.testnet_new]: true,
     [eBobNetwork.testnet]: true,
     [eBobNetwork.main]: true,
   },
