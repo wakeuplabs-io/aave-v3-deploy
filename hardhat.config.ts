@@ -68,8 +68,8 @@ export default {
       ...hardhatNetworkSettings,
     },
     [eBobNetwork.main]: getCommonNetworkConfig(eBobNetwork.testnet, 60808),
-    [eBobNetwork.testnet]: getCommonNetworkConfig(eBobNetwork.testnet, 111),
-    [eBobNetwork.testnet_new]: getCommonNetworkConfig(eBobNetwork.testnet_new, 808813),
+    [eBobNetwork.testnet_old]: getCommonNetworkConfig(eBobNetwork.testnet_old, 111),
+    [eBobNetwork.testnet]: getCommonNetworkConfig(eBobNetwork.testnet, 808813),
     tenderly: getCommonNetworkConfig("tenderly", 1),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
@@ -222,7 +222,7 @@ export default {
         },
       },
       {
-        network: eBobNetwork.testnet,
+        network: eBobNetwork.testnet_old,
         chainId: 111,
         urls: {
           apiURL: "https://testnet-explorer.gobob.xyz/api",
@@ -230,7 +230,7 @@ export default {
         },
       },
       {
-        network: eBobNetwork.testnet_new,
+        network: eBobNetwork.testnet,
         chainId: 808813,
         urls: {
           apiURL: "https://bob-sepolia.explorer.gobob.xyz/api",

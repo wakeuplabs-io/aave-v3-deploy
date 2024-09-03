@@ -19,12 +19,12 @@ export const BobConfig: IAaveConfiguration = {
     WETH: strategyWETH,
   },
   ReserveAssets: {
-    [eBobNetwork.testnet_new]: {
+    [eBobNetwork.testnet]: {
       USDC: "0x14E986C4a733B555c317D95Fe0FC5bFB5a7D166C",
       DAI: "0xcb913C75362A7Fd39de6A5DDE4341F370F5B4419",
       WETH: "0x8CEc2719a2e896A11eA3f10406EfDb6Ad87281D9",
     },
-    [eBobNetwork.testnet]: {
+    [eBobNetwork.testnet_old]: {
       USDC: "0x509AeFe02953BC2fB8abCa53Fd83C94D86c05922",
       DAI: "0x4e4e256D3a9789329AB540a7a3b2cd0c03C40431",
       WETH: "0x5546cB953770BA6Aa78FdbaEFB3450F87d97dDBC",
@@ -44,12 +44,12 @@ export const BobConfig: IAaveConfiguration = {
     },
   },
   ChainlinkAggregator: {
-    [eBobNetwork.testnet]: {
+    [eBobNetwork.testnet_old]: {
       DAI: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
       WETH: ZERO_ADDRESS,
     },
-    [eBobNetwork.testnet_new]: {
+    [eBobNetwork.testnet]: {
       DAI: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
       WETH: ZERO_ADDRESS,

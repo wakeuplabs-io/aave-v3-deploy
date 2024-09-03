@@ -41,7 +41,7 @@ makeSuite("Pool", (testEnv: TestEnv) => {
     );
   }
   
-  it.only("Supply Variable DAI", async () => {
+  it("Supply Variable DAI", async () => {
     const { users, dai,usdc, aUsdc, aDai, pool } = testEnv;
     
     const user = users[0];
