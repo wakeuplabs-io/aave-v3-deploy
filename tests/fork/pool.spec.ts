@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { parseEther } from "ethers/lib/utils";
+import { parseEther, formatEther } from "ethers/lib/utils";
 import { makeSuite, TestEnv } from "../utils/make-suite";
 import { expect } from "chai";
 import { IERC20, SignerWithAddress, waitForTx } from "../../helpers";
@@ -44,8 +44,9 @@ makeSuite("Pool", (testEnv: TestEnv) => {
   it("Supply Variable DAI", async () => {
     const { users, dai,usdc, aUsdc, aDai, pool } = testEnv;
     
-    const user = users[1];
+    const user = users[0];
     const aTokensBalanceBeforeSupply = await aDai.balanceOf(user.address);
+    const balance = await dai.balanceOf(user.address);
     
     // Approve and Deposit with USDC
     await supply(dai, user, depositSize);
@@ -58,15 +59,16 @@ makeSuite("Pool", (testEnv: TestEnv) => {
   });
 
   it("Borrow Variable DAI and replay with DAI", async () => {
-    const { users, dai, aDai, pool, variableDebtDai } = testEnv;
+    const { deployer, users, dai, aDai, pool, variableDebtDai } = testEnv;
     
     const borrowSize = BigNumber.from(parseEther("1"));
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
-    const user = users[1];
+    const user = users[0];
 
     const poolService = await pool.connect(user.signer);
 
     await supply(dai, user, depositSize);
+    await supply(dai, deployer, depositSize);
 
     const aTokensBalance = await aDai.balanceOf(user.address);
 
@@ -104,7 +106,7 @@ makeSuite("Pool", (testEnv: TestEnv) => {
     const supplySize = BigNumber.from(parseEther("1"));
     const borrowSize = BigNumber.from(parseEther("0.00000005"));
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
-    const user = users[1];
+    const user = users[0];
 
     const poolService = await pool.connect(user.signer);
 
@@ -146,7 +148,7 @@ makeSuite("Pool", (testEnv: TestEnv) => {
     
     const borrowSize = BigNumber.from("1000000");
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
-    const user = users[1];
+    const user = users[0];
 
     const poolService = await pool.connect(user.signer);
 

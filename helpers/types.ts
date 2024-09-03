@@ -58,6 +58,7 @@ export enum ePolygonNetwork {
 
 export enum eBobNetwork {
   main = "bob",
+  testnet_old = "bob-sepolia-old",
   testnet = "bob-sepolia",
 }
 

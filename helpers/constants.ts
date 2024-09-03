@@ -47,7 +47,8 @@ export const WRAPPED_NATIVE_TOKEN_PER_NETWORK: { [network: string]: string } = {
   [eFantomNetwork.main]: "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
   [eHarmonyNetwork.main]: "0xcF664087a5bB0237a0BAd6742852ec6c8d69A27a",
   [ePolygonNetwork.polygon]: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-  [eBobNetwork.testnet]: "0x5546cB953770BA6Aa78FdbaEFB3450F87d97dDBC",
+  [eBobNetwork.testnet_old]: "0x5546cB953770BA6Aa78FdbaEFB3450F87d97dDBC",
+  [eBobNetwork.testnet]: "0x8CEc2719a2e896A11eA3f10406EfDb6Ad87281D9",
 };
 
 export const ZERO_BYTES_32 =
@@ -149,7 +150,8 @@ export const POOL_ADMIN: Record<string, string> = {
   [eBaseNetwork.base]: "0xA9F30e6ED4098e9439B2ac8aEA2d3fc26BcEbb45",
   [eBaseNetwork.baseGoerli]: "0xA9F30e6ED4098e9439B2ac8aEA2d3fc26BcEbb45",
   [eEthereumNetwork.tenderly]: ETHEREUM_SHORT_EXECUTOR,
-  [eBobNetwork.testnet]: "0xb7ba1Dea4a3745e58959a2091b47096cc197be5A",
+  [eBobNetwork.testnet_old]: "0x7aF08613Bd9E2111EbA13a2d5d08a9A0cF4d3307",
+  [eBobNetwork.testnet]: "0x7aF08613Bd9E2111EbA13a2d5d08a9A0cF4d3307",
 };
 
 export const EMERGENCY_ADMIN: Record<string, string> = {
