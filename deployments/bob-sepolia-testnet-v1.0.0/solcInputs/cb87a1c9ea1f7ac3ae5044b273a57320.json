@@ -1,0 +1,36 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/chainlinkBypass/EAC.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.9;\n\ncontract EACAggregatorProxy {\n    uint8 private constant DECIMALS = 18;\n    int256 private latestAnswerValue;\n    uint256 private latestRoundId;\n    uint256 private latestTimestampValue;\n\n    constructor() {\n      latestAnswerValue = int256(2 * 10 ** DECIMALS);\n    }\n\n    function decimals() external view returns (uint8) {\n        return DECIMALS;\n    }\n\n    function latestAnswer() external view returns (int256) {\n        return latestAnswerValue;\n    }\n\n    function latestTimestamp() external view returns (uint256) {\n        return latestTimestampValue;\n    }\n\n    function latestRound() external view returns (uint256) {\n        return latestRoundId;\n    }\n\n    function getAnswer(uint256 roundId) external view returns (int256) {\n        // Implement the logic to retrieve the answer for a specific roundId\n        return 0; // Replace with actual logic\n    }\n\n    function getTimestamp(uint256 roundId) external view returns (uint256) {\n        // Implement the logic to retrieve the timestamp for a specific roundId\n        return 0; // Replace with actual logic\n    }\n\n    function updateAnswer(int256 _answer) external {\n        latestAnswerValue = _answer;\n        latestRoundId++;\n        latestTimestampValue = block.timestamp;\n        emit AnswerUpdated(_answer, latestRoundId, latestTimestampValue);\n        emit NewRound(latestRoundId, msg.sender);\n    }\n\n    event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 timestamp);\n    event NewRound(uint256 indexed roundId, address indexed startedBy);\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 100000
+    },
+    "evmVersion": "berlin",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
