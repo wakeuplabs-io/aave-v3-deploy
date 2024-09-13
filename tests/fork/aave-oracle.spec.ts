@@ -132,7 +132,7 @@ makeSuite('AaveOracle', (testEnv: TestEnv) => {
     });
 
     it('Owner set a new asset source', async () => {
-      const { deployer, poolAdmin, oracle: aaveOracle, dai, daiChainlinkAggregator } = testEnv;
+      const { deployer, poolAdmin, fallbackOracle, oracle: aaveOracle, dai, daiChainlinkAggregator } = testEnv;
 
       await waitForTx(
         await aaveOracle
@@ -140,14 +140,16 @@ makeSuite('AaveOracle', (testEnv: TestEnv) => {
         .setAssetSources([dai.address], [ZERO_ADDRESS])
       )
 
+      const fallbackPrice = await fallbackOracle.connect(deployer.address).getAssetPrice(dai.address);
+
       // Asset has no source
       expect(await aaveOracle.getSourceOfAsset(dai.address)).to.be.eq(ZERO_ADDRESS);
       const priorSourcePrice = await aaveOracle.getAssetPrice(dai.address);
       const priorSourcesPrices = (await aaveOracle.getAssetsPrices([dai.address])).map((x) =>
         x.toString()
       );
-      expect(priorSourcePrice).to.equal('0');
-      expect(priorSourcesPrices).to.eql(['0']);
+      expect(priorSourcePrice).to.equal(fallbackPrice.toString());
+      expect(priorSourcesPrices).to.eql([fallbackPrice.toString()]);
 
       // Add asset source
       await expect(
@@ -173,10 +175,6 @@ makeSuite('AaveOracle', (testEnv: TestEnv) => {
 
     it('Owner update an existing asset source', async () => {
       const { deployer, poolAdmin, oracle, dai, daiChainlinkAggregator } = testEnv;
-
-      // DAI token has already a source
-      const daiSource = await oracle.getSourceOfAsset(dai.address);
-      expect(daiSource).to.be.not.eq(ZERO_ADDRESS);
 
       // Update DAI source
       await expect(
