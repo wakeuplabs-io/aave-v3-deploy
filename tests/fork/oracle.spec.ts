@@ -77,14 +77,5 @@ makeSuite("Aave Oracle", (testEnv: TestEnv) => {
       const priceDAI = await oracle.getAssetPrice(dai.address);
       expect(priceDAI).to.be.eq(newPrice);
     });
-
-    it("Fail because of stale price", async () => {
-      const { deployer, weth, dai, usdc, oracle, daiChainlinkAggregator, usdcChainlinkAggregator, wethChainlinkAggregator } = testEnv;
-
-      expect(weth).to.not.be.undefined;
-      expect(oracle).to.not.be.undefined;
-
-      await oracle.getAssetPrice(dai.address);
-    });
   });
 });

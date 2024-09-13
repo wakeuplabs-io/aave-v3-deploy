@@ -62,8 +62,7 @@ import { Libraries } from "hardhat-deploy/dist/types";
 import { getContract } from "./utilities/tx";
 import { EMISSION_MANAGER_ID } from ".";
 import { EmissionManager } from "../typechain";
-import { PriceOracle as CustomPriceOracle } from "../typechain/contracts/oracle/PriceOracle";
-import { IFallbackPriceOracle } from "../typechain/contracts/oracle";
+import { FallbackPriceOracle } from "../typechain/contracts/oracle";
 
 // Prevent error HH9 when importing this file inside tasks or helpers at Hardhat config load
 declare var hre: HardhatRuntimeEnvironment;
@@ -335,10 +334,10 @@ export const getEmissionManager = async (address?: tEthereumAddress) =>
   );
 
   export const getPriceOracleFallback = async (address?: tEthereumAddress) => {
-    const fallbackOracle = await getContract<IFallbackPriceOracle>(
+    const fallbackOracle = await getContract<FallbackPriceOracle>(
       "contracts/oracle/FallbackPriceOracle.sol:FallbackPriceOracle",
       address || (await hre.deployments.get(FALLBACK_ORACLE_ID)).address
-    );
+    ) as FallbackPriceOracle;
 
     const signer = await getFirstSigner();
     return new hre.ethers.Contract(

@@ -6,7 +6,7 @@ import {
 import { Signer } from "ethers";
 import { evmRevert, evmSnapshot } from "../../helpers/utilities/tx";
 import { tEthereumAddress } from "../../helpers/types";
-import { IPriceOracle, MockAggregatorInterface, Pool, UiPoolDataProviderV3 } from "../../typechain";
+import { FallbackPriceOracle, IFallbackPriceOracle, IPriceOracle, MockAggregatorInterface, Pool, UiPoolDataProviderV3 } from "../../typechain";
 import { AaveProtocolDataProvider } from "../../typechain";
 import { AToken } from "../../typechain";
 import { PoolConfigurator } from "../../typechain";
@@ -15,7 +15,6 @@ import { parseEther } from "ethers/lib/utils";
 import { PoolAddressesProvider } from "../../typechain";
 import { PoolAddressesProviderRegistry } from "../../typechain";
 import {
-  AaveOracle,
   IERC20,
   StableDebtToken,
   VariableDebtToken,
@@ -35,6 +34,7 @@ import {
   getAToken,
   getERC20,
   getFaucet,
+  getPriceOracleFallback,
   getStableDebtToken,
   getVariableDebtToken,
   getWETH,
@@ -44,6 +44,7 @@ import { ethers, deployments } from "hardhat";
 import { getEthersSigners } from "../../helpers/utilities/signer";
 import { MARKET_NAME } from "../../helpers/env";
 import { FORK } from "../../helpers";
+import { AaveOracle } from "../../typechain/contracts/oracle";
 
 export interface SignerWithAddress {
   signer: Signer;
@@ -58,6 +59,7 @@ export interface TestEnv {
   pool: Pool;
   configurator: PoolConfigurator;
   oracle: AaveOracle;
+  fallbackOracle: FallbackPriceOracle;
   helpersContract: AaveProtocolDataProvider;
   weth: WETH9;
   aWETH: AToken;
@@ -105,6 +107,7 @@ const testEnv: TestEnv = {
   configurator: {} as PoolConfigurator,
   helpersContract: {} as AaveProtocolDataProvider,
   oracle: {} as AaveOracle,
+  fallbackOracle: {} as FallbackPriceOracle,
   weth: {} as WETH9,
   aWETH: {} as AToken,
   variableDebtWeth: {} as VariableDebtToken,
@@ -119,7 +122,7 @@ const testEnv: TestEnv = {
   registry: {} as PoolAddressesProviderRegistry,
   wrappedTokenGateway: {} as WrappedTokenGatewayV3,
   faucetOwnable: {} as Faucet,
-} as TestEnv;
+} as unknown as TestEnv;
 
 export async function initializeMakeSuite() {
   const poolConfig = await loadPoolConfig(MARKET_NAME as ConfigNames);
@@ -168,6 +171,8 @@ export async function initializeMakeSuite() {
     "Pool",
     poolArtifact.address
   )) as Pool;
+
+  testEnv.fallbackOracle = await getPriceOracleFallback();
 
   testEnv.configurator = (await ethers.getContractAt(
     "PoolConfigurator",

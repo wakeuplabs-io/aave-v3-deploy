@@ -127,7 +127,11 @@ contract AaveOracle is IAaveOracle, IPriceOracleSentinel {
 
       bool stale = _isUpAndGracePeriodPassed(asset);
       if (stale) {
-        revert(Errors.AGGREGATOR_IS_STALE);
+        if (address(0) == address(_fallbackOracle)) {
+          revert(Errors.AGGREGATOR_IS_STALE);
+        } else {
+          return _fallbackOracle.getAssetPrice(asset);
+        }
       }
 
       if (price > 0) {
