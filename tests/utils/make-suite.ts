@@ -6,7 +6,7 @@ import {
 import { Signer } from "ethers";
 import { evmRevert, evmSnapshot } from "../../helpers/utilities/tx";
 import { tEthereumAddress } from "../../helpers/types";
-import { IPriceOracle, Pool, UiPoolDataProviderV3 } from "../../typechain";
+import { IPriceOracle, MockAggregatorInterface, Pool, UiPoolDataProviderV3 } from "../../typechain";
 import { AaveProtocolDataProvider } from "../../typechain";
 import { AToken } from "../../typechain";
 import { PoolConfigurator } from "../../typechain";
@@ -43,6 +43,7 @@ import {
 import { ethers, deployments } from "hardhat";
 import { getEthersSigners } from "../../helpers/utilities/signer";
 import { MARKET_NAME } from "../../helpers/env";
+import { FORK } from "../../helpers";
 
 export interface SignerWithAddress {
   signer: Signer;
@@ -75,12 +76,24 @@ export interface TestEnv {
   wrappedTokenGateway: WrappedTokenGatewayV3;
   faucetOwnable: Faucet;
   uiPoolDataProvider: UiPoolDataProviderV3;
+  daiChainlinkAggregator: MockAggregatorInterface;
+  usdcChainlinkAggregator: MockAggregatorInterface;
+  wethChainlinkAggregator: MockAggregatorInterface;
 }
 
 let HardhatSnapshotId: string = "0x1";
 const setHardhatSnapshotId = (id: string) => {
   HardhatSnapshotId = id;
 };
+
+async function getChainlinkAggregator(address: string) {
+  const contract = (await ethers.getContractAt(
+    "contracts/dependencies/chainlink/AggregatorInterface.sol:AggregatorInterface",
+    address
+  )) as MockAggregatorInterface;
+
+  return contract;
+}
 
 const testEnv: TestEnv = {
   deployer: {} as SignerWithAddress,
@@ -172,7 +185,7 @@ export async function initializeMakeSuite() {
 
   testEnv.registry = (await ethers.getContractAt("PoolAddressesProviderRegistry", addressesProviderRegistryArtifact.address)) as PoolAddressesProviderRegistry;
   testEnv.oracle = (await ethers.getContractAt(
-    "AaveOracle",
+    "contracts/oracle/AaveOracle.sol:AaveOracle",
     priceOracleArtifact.address
   )) as AaveOracle;
 
@@ -240,6 +253,10 @@ export async function initializeMakeSuite() {
   testEnv.usdc = await getERC20(usdcAddress);
   testEnv.weth = await getWETH(wethAddress);
 
+  testEnv.daiChainlinkAggregator = await getChainlinkAggregator(poolConfig.ChainlinkAggregator[FORK!]!.DAI);
+  testEnv.usdcChainlinkAggregator = await getChainlinkAggregator(poolConfig.ChainlinkAggregator[FORK!]!.USDC);
+  testEnv.wethChainlinkAggregator = await getChainlinkAggregator(poolConfig.ChainlinkAggregator[FORK!]!.WETH);
+
   if (isTestnetMarket(poolConfig)) {
     testEnv.faucetOwnable = await getFaucet();
   }
@@ -279,7 +296,7 @@ export async function ititializeOracle() {
   );
 
   const fallbackOracle = (await ethers.getContractAt(
-    "contracts/oracle/PriceOracle.sol:PriceOracle",
+    "contracts/oracle/FallbackPriceOracle.sol:FallbackPriceOracle",
     addressesfallbackOracle.address
   )) as IPriceOracle;
 

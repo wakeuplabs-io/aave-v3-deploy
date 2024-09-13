@@ -37,8 +37,9 @@ const func: DeployFunction = async function ({
   console.log("- Setup Liquidation protocol fee");
   await hre.run("setup-liquidation-protocol-fee");
 
-  console.log("- Initialize Prices fallback oracle");
-  await hre.run("initialize-prices-fallback-oracle");
+  //TODO: revise this
+  // console.log("- Initialize Prices fallback oracle");
+  // await hre.run("initialize-prices-fallback-oracle");
 
   if (isTestnetMarket(poolConfig)) {
     // Disable faucet minting and borrowing of wrapped native token

@@ -2,13 +2,14 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import {IPriceOracle} from "./IPriceOracle.sol";
+import {IFallbackPriceOracle} from "./IFallbackPriceOracle.sol";
 
-contract PriceOracle is AccessControl, IPriceOracle {
+contract FallbackPriceOracle is AccessControl, IFallbackPriceOracle {
     bytes32 public constant OWNER_ADMIN = keccak256("OWNER_ADMIN");
 
     // Map of asset prices (asset => price)
     mapping(address => uint256) internal prices;
+    mapping(address => uint256) internal lastUpdated;
 
     uint256 internal ethPriceUsd;
 
@@ -31,6 +32,7 @@ contract PriceOracle is AccessControl, IPriceOracle {
         uint256 price
     ) external override onlyRole(OWNER_ADMIN) {
         prices[asset] = price;
+        lastUpdated[asset] = block.timestamp;
         emit AssetPriceUpdated(asset, price, block.timestamp);
     }
 

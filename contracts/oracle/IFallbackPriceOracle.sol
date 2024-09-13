@@ -3,7 +3,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/IAccessControl.sol";
 
-interface IPriceOracle is IAccessControl {
+interface IFallbackPriceOracle is IAccessControl {
     /**
      * @notice Returns the asset price in the base currency
      * @param asset The address of the asset

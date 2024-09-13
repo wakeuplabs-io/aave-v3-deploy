@@ -1,8 +1,9 @@
 import { BigNumber } from "ethers";
-import { parseEther, formatEther } from "ethers/lib/utils";
+import { parseEther } from "ethers/lib/utils";
 import { makeSuite, TestEnv } from "../utils/make-suite";
 import { expect } from "chai";
 import { IERC20, SignerWithAddress, waitForTx } from "../../helpers";
+import { supply } from "../utils/supply";
 
 enum RateMode {
   STABLE = 1,
@@ -12,20 +13,6 @@ enum RateMode {
 makeSuite("Pool", (testEnv: TestEnv) => {
   const zero = BigNumber.from("0");
   const depositSize = parseEther("10");
-  
-  async function supply(asset: IERC20, user: SignerWithAddress, amount: BigNumber) {
-    const { pool } = testEnv;
-
-    await waitForTx(
-      await asset
-        .connect(user.signer)
-        .approve(pool.address, amount)
-    )
-
-    await waitForTx(
-      await pool.connect(user.signer).supply(asset.address, amount, user.address, 0)
-    );
-  }
 
   async function repay(asset: IERC20, user: SignerWithAddress, amount: BigNumber, mode: RateMode) {
     const { pool } = testEnv;
@@ -49,8 +36,8 @@ makeSuite("Pool", (testEnv: TestEnv) => {
     const balance = await dai.balanceOf(user.address);
     
     // Approve and Deposit with USDC
-    await supply(dai, user, depositSize);
-    await supply(usdc, user, depositSize);
+    await supply(dai, user, depositSize, pool);
+    await supply(usdc, user, depositSize, pool);
 
     const aTokensBalance = await aDai.balanceOf(user.address);
 
@@ -67,8 +54,8 @@ makeSuite("Pool", (testEnv: TestEnv) => {
 
     const poolService = await pool.connect(user.signer);
 
-    await supply(dai, user, depositSize);
-    await supply(dai, deployer, depositSize);
+    await supply(dai, user, depositSize, pool);
+    await supply(dai, deployer, depositSize, pool);
 
     const aTokensBalance = await aDai.balanceOf(user.address);
 
@@ -111,8 +98,8 @@ makeSuite("Pool", (testEnv: TestEnv) => {
     const poolService = await pool.connect(user.signer);
 
     // Approve and Deposit with USDC
-    await supply(dai, user, supplySize);
-    await supply(usdc, deployer, supplySize.mul(10));
+    await supply(dai, user, supplySize, pool);
+    await supply(usdc, deployer, supplySize.mul(10), pool);
 
     const aTokensBalance = await aUsdc.balanceOf(deployer.address);
 
@@ -153,8 +140,8 @@ makeSuite("Pool", (testEnv: TestEnv) => {
     const poolService = await pool.connect(user.signer);
 
     // Approve and Deposit with USDC
-    await supply(dai, user, depositSize);
-    await supply(usdc, deployer, depositSize);
+    await supply(dai, user, depositSize, pool);
+    await supply(usdc, deployer, depositSize, pool);
 
     const aTokensBalance = await aUsdc.balanceOf(user.address);
 

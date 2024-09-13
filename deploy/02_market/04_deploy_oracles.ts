@@ -2,7 +2,7 @@ import { getChainlinkOracles } from "../../helpers/market-config-helpers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { COMMON_DEPLOY_PARAMS } from "../../helpers/env";
-import { V3_CORE_VERSION, ZERO_ADDRESS } from "../../helpers/constants";
+import { PRICE_STALE_THRESHOLD, V3_CORE_VERSION, ZERO_ADDRESS } from "../../helpers/constants";
 import {
   FALLBACK_ORACLE_ID,
   ORACLE_ID,
@@ -43,7 +43,7 @@ const func: DeployFunction = async function ({
       from: deployer,
       args: [],
       ...COMMON_DEPLOY_PARAMS,
-      contract: "contracts/oracle/PriceOracle.sol:PriceOracle",
+      contract: "contracts/oracle/FallbackPriceOracle.sol:FallbackPriceOracle",
     });
   
   const fallbackOracleAddress = fallbackOracle.address;
@@ -66,9 +66,10 @@ const func: DeployFunction = async function ({
       fallbackOracleAddress,
       ZERO_ADDRESS,
       parseUnits("1", OracleQuoteUnit),
+      PRICE_STALE_THRESHOLD
     ],
     ...COMMON_DEPLOY_PARAMS,
-    contract: "AaveOracle",
+    contract: "contracts/oracle/AaveOracle.sol:AaveOracle",
   });
 
   return true;

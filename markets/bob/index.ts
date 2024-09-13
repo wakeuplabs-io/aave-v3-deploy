@@ -20,6 +20,7 @@ export const BobConfig: IAaveConfiguration = {
   },
   ReserveAssets: {
     [eBobNetwork.testnet]: {
+      // USDT: "0x763A9126B8cc85E50592e1705858f6338E7732f7",
       USDC: "0x14E986C4a733B555c317D95Fe0FC5bFB5a7D166C",
       DAI: "0xcb913C75362A7Fd39de6A5DDE4341F370F5B4419",
       WETH: "0x8CEc2719a2e896A11eA3f10406EfDb6Ad87281D9",
@@ -50,9 +51,9 @@ export const BobConfig: IAaveConfiguration = {
       WETH: ZERO_ADDRESS,
     },
     [eBobNetwork.testnet]: {
-      DAI: ZERO_ADDRESS,
-      USDC: ZERO_ADDRESS,
-      WETH: ZERO_ADDRESS,
+      DAI: "0x009a8793e5f751A76d627b3c6aDC620b46385e70",
+      USDC: "0x009a8793e5f751A76d627b3c6aDC620b46385e70",
+      WETH: "0x009a8793e5f751A76d627b3c6aDC620b46385e70",
     },
     [eBobNetwork.main]: {
       DAI: ZERO_ADDRESS,

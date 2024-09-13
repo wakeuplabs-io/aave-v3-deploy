@@ -33,15 +33,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   // 0. Check beforehand that all reserves have non-zero addresses
   const reserves = await getReserveAddresses(poolConfig, network);
-  console.log(reserves);
   const reservesConfig = poolConfig.ReservesConfig;
 
   const reserveConfigSymbols = Object.keys(reservesConfig);
   const reserveSymbols = Object.keys(reserves);
 
   if (!containsSameMembers(reserveConfigSymbols, reserveSymbols)) {
-    console.log(reserveConfigSymbols);
-    console.log(reserveSymbols);
     throw "[Deployment][Error] Mismatch between Config.ReservesConfig and Config.ReserveAssets token symbols";
   }
   if (reserveSymbols.length === 0) {
