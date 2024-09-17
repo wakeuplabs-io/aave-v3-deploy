@@ -6,7 +6,7 @@ import {
 import { Signer } from "ethers";
 import { evmRevert, evmSnapshot } from "../../helpers/utilities/tx";
 import { tEthereumAddress } from "../../helpers/types";
-import { FallbackPriceOracle, IFallbackPriceOracle, IPriceOracle, MockAggregatorInterface, Pool, UiPoolDataProviderV3 } from "../../typechain";
+import { FallbackPriceOracle, IPriceOracle, MockAggregatorInterface, Pool, UiPoolDataProviderV3 } from "../../typechain";
 import { AaveProtocolDataProvider } from "../../typechain";
 import { AToken } from "../../typechain";
 import { PoolConfigurator } from "../../typechain";
@@ -88,9 +88,9 @@ const setHardhatSnapshotId = (id: string) => {
   HardhatSnapshotId = id;
 };
 
-async function getChainlinkAggregator(address: string) {
+async function getChainlinkMockAggregator(address: string) {
   const contract = (await ethers.getContractAt(
-    "contracts/dependencies/chainlink/AggregatorInterface.sol:AggregatorInterface",
+    "contracts/dependencies/chainlink/AggregatorInterface.sol:MockAggregatorInterface",
     address
   )) as MockAggregatorInterface;
 
@@ -172,7 +172,7 @@ export async function initializeMakeSuite() {
     poolArtifact.address
   )) as Pool;
 
-  testEnv.fallbackOracle = await getPriceOracleFallback();
+  testEnv.fallbackOracle = await getPriceOracleFallback() as FallbackPriceOracle;
 
   testEnv.configurator = (await ethers.getContractAt(
     "PoolConfigurator",
@@ -258,9 +258,9 @@ export async function initializeMakeSuite() {
   testEnv.usdc = await getERC20(usdcAddress);
   testEnv.weth = await getWETH(wethAddress);
 
-  testEnv.daiChainlinkAggregator = await getChainlinkAggregator(poolConfig.ChainlinkAggregator[FORK!]!.DAI);
-  testEnv.usdcChainlinkAggregator = await getChainlinkAggregator(poolConfig.ChainlinkAggregator[FORK!]!.USDC);
-  testEnv.wethChainlinkAggregator = await getChainlinkAggregator(poolConfig.ChainlinkAggregator[FORK!]!.WETH);
+  testEnv.daiChainlinkAggregator = await getChainlinkMockAggregator(poolConfig.ChainlinkAggregator[FORK!]!.DAI);
+  testEnv.usdcChainlinkAggregator = await getChainlinkMockAggregator(poolConfig.ChainlinkAggregator[FORK!]!.USDC);
+  testEnv.wethChainlinkAggregator = await getChainlinkMockAggregator(poolConfig.ChainlinkAggregator[FORK!]!.WETH);
 
   if (isTestnetMarket(poolConfig)) {
     testEnv.faucetOwnable = await getFaucet();

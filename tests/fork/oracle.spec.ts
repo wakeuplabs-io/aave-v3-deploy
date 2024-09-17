@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers";
 import { makeSuite, TestEnv } from "../utils/make-suite";
 import { expect } from "chai";
-import { waitForTx } from "../../helpers";
+import { waitForTx, ZERO_ADDRESS } from "../../helpers";
 import { supply } from "../utils/supply";
 import { parseEther } from "ethers/lib/utils";
 
@@ -16,11 +16,12 @@ makeSuite("Aave Oracle", (testEnv: TestEnv) => {
 
   describe("Price Oracle in stale state", () => {
     it("should revert when getting price", async () => {
-      const { weth, dai, oracle } = testEnv;
+      const { deployer, weth, dai, oracle } = testEnv;
 
       expect(weth).to.not.be.undefined;
       expect(oracle).to.not.be.undefined;
-  
+
+      await oracle.connect(deployer.signer).setFallbackOracle(ZERO_ADDRESS);
   
       await expect(oracle.getAssetPrice(dai.address)).rejectedWith("92");  
     });
@@ -39,7 +40,9 @@ makeSuite("Aave Oracle", (testEnv: TestEnv) => {
     });
 
     it("should user not be able to borrow", async () => {
-      const { deployer, users, dai, aDai, pool } = testEnv;
+      const { oracle, deployer, users, dai, aDai, pool } = testEnv;
+
+      await oracle.connect(deployer.signer).setFallbackOracle(ZERO_ADDRESS);
     
       const borrowSize = BigNumber.from(parseEther("1"));
       const user = users[0];
@@ -66,7 +69,7 @@ makeSuite("Aave Oracle", (testEnv: TestEnv) => {
 
   describe("Price oracle with price updated", () => {
     it("Check Assets price", async () => {
-      const { deployer, weth, dai, oracle, daiChainlinkAggregator } = testEnv;
+      const { deployer, dai, oracle, daiChainlinkAggregator } = testEnv;
 
       const newPrice = 11 * 10e8;
 

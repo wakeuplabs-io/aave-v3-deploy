@@ -13,15 +13,13 @@ interface AggregatorInterface {
 
   function getTimestamp(uint256 roundId) external view returns (uint256);
 
-  function updatePrice(int256 newAnswer) external;
-
-  function updateTimestamp(uint256 newTimestamp) external;
-
   event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt);
 
   event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt);
 }
 
 interface MockAggregatorInterface is AggregatorInterface {
+  function updatePrice(int256 newAnswer) external;
+
   function updateTimestamp(uint256 newTimestamp) external;
 }
