@@ -1,11 +1,16 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.10;
 
+// Dependencies
 import {AggregatorInterface} from '../dependencies/chainlink/AggregatorInterface.sol';
+
+// Libraries
 import {Errors} from '../libraries/helpers/Errors.sol';
+
+// Interfaces
 import {IACLManager} from '../interfaces/IACLManager.sol';
 import {IPoolAddressesProvider} from '../interfaces/IPoolAddressesProvider.sol';
-import {IPriceOracleSentinel} from '../interfaces/IPriceOracleSentinel.sol';
+import { PriceOracleSentinel } from './PriceOracleSentinel.sol';
 import {IPriceOracleGetter} from '../interfaces/IPriceOracleGetter.sol';
 import {IAaveOracle} from '../interfaces/IAaveOracle.sol';
 
@@ -13,33 +18,18 @@ import {IAaveOracle} from '../interfaces/IAaveOracle.sol';
  * @title AaveOracle
  * @author Aave
  * @notice Contract to get asset prices, manage price sources and update the fallback oracle
- * - Use of Chainlink Aggregators as first source of price
+ * - Use of Chainlink Aggregators interface as first source of price
  * - If the returned price by a Chainlink aggregator is <= 0, the call is forwarded to a fallback oracle
  * - Owned by the Aave governance
  */
-contract AaveOracle is IAaveOracle, IPriceOracleSentinel {
+contract AaveOracle is IAaveOracle, PriceOracleSentinel {
   IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
 
-  // Map of asset price sources (asset => priceSource)
   mapping(address => AggregatorInterface) private assetsSources;
 
   IPriceOracleGetter private _fallbackOracle;
   address public immutable override BASE_CURRENCY;
   uint256 public immutable override BASE_CURRENCY_UNIT;
-
-  uint256 internal _gracePeriod;
-
-  /**
-   * @dev Only risk or pool admin can call functions marked by this modifier.
-   */
-  modifier onlyRiskOrPoolAdmins() {
-    IACLManager aclManager = IACLManager(ADDRESSES_PROVIDER.getACLManager());
-    require(
-      aclManager.isRiskAdmin(msg.sender) || aclManager.isPoolAdmin(msg.sender),
-      Errors.CALLER_NOT_RISK_OR_POOL_ADMIN
-    );
-    _;
-  }
 
   /**
    * @dev Only asset listing or pool admin can call functions marked by this modifier.
@@ -58,6 +48,7 @@ contract AaveOracle is IAaveOracle, IPriceOracleSentinel {
    *        aggregator is not consistent
    * @param baseCurrency The base currency used for the price quotes. If USD is used, base currency is 0x0
    * @param baseCurrencyUnit The unit of the base currency
+   * @param gracePeriod Time in seconds after which the oracle is considered unhealthy
    */
   constructor(
     IPoolAddressesProvider provider,
@@ -67,7 +58,7 @@ contract AaveOracle is IAaveOracle, IPriceOracleSentinel {
     address baseCurrency,
     uint256 baseCurrencyUnit,
     uint256 gracePeriod
-  ) {
+  ) PriceOracleSentinel(provider, gracePeriod) {
     ADDRESSES_PROVIDER = provider;
     _setFallbackOracle(fallbackOracle);
     _setAssetsSources(assets, sources);
@@ -123,9 +114,10 @@ contract AaveOracle is IAaveOracle, IPriceOracleSentinel {
     } else if (address(source) == address(0)) {
       return _fallbackOracle.getAssetPrice(asset);
     } else {
-      int256 price = source.latestAnswer();
+      uint256 price = uint256(source.latestAnswer());
+      uint256 lastUpdate = source.latestTimestamp();
 
-      bool stale = _isUpAndGracePeriodPassed(asset);
+      bool stale = _isUpAndGracePeriodPassed(price, lastUpdate);
       if (stale) {
         if (address(0) == address(_fallbackOracle)) {
           revert(Errors.AGGREGATOR_IS_STALE);
@@ -162,30 +154,6 @@ contract AaveOracle is IAaveOracle, IPriceOracleSentinel {
   function getFallbackOracle() external view returns (address) {
     return address(_fallbackOracle);
   }
-
-
-  /**
-   * @notice Checks the sequencer oracle is healthy: is up and grace period passed.
-   * @return True if the SequencerOracle is up and the grace period passed, false otherwise
-   */
-  function _isUpAndGracePeriodPassed(address asset) internal view returns (bool) {
-    AggregatorInterface aggregator = AggregatorInterface(assetsSources[asset]);
-    int256 answer = aggregator.latestAnswer();
-    uint256 lastUpdateTimestamp = aggregator.latestTimestamp();
-    return answer == 0 || block.timestamp - lastUpdateTimestamp > _gracePeriod; //TODO: check the answer is not 0. Before it was &&
-  }
-
-  /// @inheritdoc IPriceOracleSentinel
-  function setGracePeriod(uint256 newGracePeriod) public onlyRiskOrPoolAdmins {
-    _gracePeriod = newGracePeriod;
-    emit GracePeriodUpdated(newGracePeriod);
-  }
-
-  /// @inheritdoc IPriceOracleSentinel
-  function getGracePeriod() public view returns (uint256) {
-    return _gracePeriod;
-  }
-
 
   function _onlyAssetListingOrPoolAdmins() internal view {
     IACLManager aclManager = IACLManager(ADDRESSES_PROVIDER.getACLManager());

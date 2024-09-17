@@ -41,7 +41,7 @@ const func: DeployFunction = async function ({
     // Deploy Fallback Oracle
     const fallbackOracle = await deploy(FALLBACK_ORACLE_ID, {
       from: deployer,
-      args: [],
+      args: [addressesProviderAddress, PRICE_STALE_THRESHOLD],
       ...COMMON_DEPLOY_PARAMS,
       contract: "contracts/oracle/FallbackPriceOracle.sol:FallbackPriceOracle",
     });
