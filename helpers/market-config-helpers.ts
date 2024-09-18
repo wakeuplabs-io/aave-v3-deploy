@@ -34,9 +34,10 @@ import {
   VARIABLE_DEBT_PREFIX,
 } from "./deploy-ids";
 import { ZERO_ADDRESS } from "./constants";
-import { getTestnetReserveAddressFromSymbol, POOL_DATA_PROVIDER } from ".";
-import { ENABLE_REWARDS } from "./env";
+import { getTestnetReserveAddressFromSymbol, POOL_DATA_PROVIDER } from "./index";
+import { COMMON_DEPLOY_PARAMS, ENABLE_REWARDS } from "./env";
 import BobConfig from "../markets/bob";
+import { DeploymentsExtension } from "hardhat-deploy/types";
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -395,3 +396,36 @@ export const isIncentivesEnabled = (poolConfig: ICommonConfiguration) => {
 
   return !!getParamPerNetwork(poolConfig.IncentivesConfig.enabled, network);
 };
+
+export const deployRedstoneAggregators = async (
+  deploy: DeploymentsExtension["deploy"],
+  deployer: tEthereumAddress,
+  redstoneAggregatorAddress: tEthereumAddress,
+  poolConfig: ICommonConfiguration,
+  network: eNetwork
+): Promise<ITokenAddress> => {
+  const isLive = hre.config.networks[network].live;
+
+  const result = {} as ITokenAddress;
+  if (isLive) {
+      console.log("[NOTICE] Using RedStoneAggregator from configuration file");
+
+      const assets = poolConfig.ReserveAssets?.[network] ?? {};
+
+      for (const [key, asset] of Object.entries(assets)) {
+        const res = await deploy(`${key}${TESTNET_PRICE_AGGR_PREFIX}`, {
+          from: deployer,
+          args: [
+            redstoneAggregatorAddress,
+            asset
+          ],
+          ...COMMON_DEPLOY_PARAMS,
+          contract: "contracts/dependencies/redstone/AggregatorRedStone.sol:AggregatorRedstone",
+        });
+
+        result[key] = res.address as tEthereumAddress;
+      }
+    }
+
+    return result;
+}

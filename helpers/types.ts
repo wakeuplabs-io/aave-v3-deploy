@@ -524,6 +524,7 @@ export interface IBaseConfiguration {
   TestnetMarket?: boolean;
   ProviderRegistryOwner?: iParamsPerNetwork<tEthereumAddress | undefined>;
   FallbackOracle?: iParamsPerNetwork<tEthereumAddress>;
+  RedstoneAggregator: tEthereumAddress;
   ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
   WrappedTokenGateway?: iParamsPerNetwork<tEthereumAddress>;
   ReserveFactorTreasuryAddress: iParamsPerNetwork<tEthereumAddress>;
@@ -551,6 +552,7 @@ export interface ICommonConfiguration extends IBaseConfiguration {}
 
 export interface IAaveConfiguration extends ICommonConfiguration {
   //ReservesConfig: iAavePoolAssets<IReserveParams>;
+  RedstoneAggregator: tEthereumAddress
 }
 
 export interface ITokenAddress {

@@ -21,6 +21,7 @@ export const INCENTIVES_V2_IMPL_ID = `IncentivesV2-${IMPL_ID}`;
 export const INCENTIVES_PULL_REWARDS_STRATEGY_ID = `PullRewardsTransferStrategy`;
 export const INCENTIVES_STAKED_TOKEN_STRATEGY_ID = `StakedTokenTransferStrategy`;
 export const ORACLE_ID = `AaveOracle-${MARKET_NAME}`;
+export const REDSTONE_AGGREGATOR_ID = `RedstoneAggregator-${MARKET_NAME}`;
 export const FALLBACK_ORACLE_ID = `FallbackOracle-${MARKET_NAME}`;
 export const TREASURY_PROXY_ID = "TreasuryProxy";
 export const TREASURY_IMPL_ID = `Treasury-${IMPL_ID}`;

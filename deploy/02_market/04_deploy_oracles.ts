@@ -1,4 +1,4 @@
-import { getChainlinkOracles } from "../../helpers/market-config-helpers";
+import { deployRedstoneAggregators, getChainlinkOracles } from "../../helpers/market-config-helpers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { COMMON_DEPLOY_PARAMS } from "../../helpers/env";
@@ -49,7 +49,10 @@ const func: DeployFunction = async function ({
   const fallbackOracleAddress = fallbackOracle.address;
 
   const reserveAssets = await getReserveAddresses(poolConfig, network);
-  const chainlinkAggregators = await getChainlinkOracles(poolConfig, network);
+  const hasRedstone = poolConfig.RedstoneAggregator && poolConfig.RedstoneAggregator !== ZERO_ADDRESS;
+  const chainlinkAggregators = hasRedstone
+    ? await deployRedstoneAggregators(deploy, deployer, poolConfig.RedstoneAggregator, poolConfig, network)
+    : await getChainlinkOracles(poolConfig, network);
 
   const [assets, sources] = getPairsTokenAggregator(
     reserveAssets,
