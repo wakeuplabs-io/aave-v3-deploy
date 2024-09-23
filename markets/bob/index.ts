@@ -44,6 +44,7 @@ export const BobConfig: IAaveConfiguration = {
       assets: ["USDC", "DAI"],
     },
   },
+  RedstoneAggregator: "0x4f704821769C39cF8D71257C35BE99DA5Ae6A9F0",
   ChainlinkAggregator: {
     [eBobNetwork.testnet_old]: {
       DAI: ZERO_ADDRESS,
