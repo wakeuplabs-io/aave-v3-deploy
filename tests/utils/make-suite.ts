@@ -122,7 +122,7 @@ const testEnv: TestEnv = {
   registry: {} as PoolAddressesProviderRegistry,
   wrappedTokenGateway: {} as WrappedTokenGatewayV3,
   faucetOwnable: {} as Faucet,
-} as unknown as TestEnv;
+} as TestEnv;
 
 export async function initializeMakeSuite() {
   const poolConfig = await loadPoolConfig(MARKET_NAME as ConfigNames);

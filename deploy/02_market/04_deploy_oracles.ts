@@ -2,7 +2,7 @@ import { deployRedstoneAggregators, getChainlinkOracles } from "../../helpers/ma
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { COMMON_DEPLOY_PARAMS } from "../../helpers/env";
-import { PRICE_STALE_THRESHOLD, V3_CORE_VERSION, ZERO_ADDRESS } from "../../helpers/constants";
+import { V3_CORE_VERSION, ZERO_ADDRESS } from "../../helpers/constants";
 import {
   FALLBACK_ORACLE_ID,
   ORACLE_ID,
@@ -11,7 +11,6 @@ import {
 import {
   loadPoolConfig,
   ConfigNames,
-  getParamPerNetwork,
   checkRequiredEnvironment,
   getReserveAddresses,
 } from "../../helpers/market-config-helpers";
@@ -41,7 +40,7 @@ const func: DeployFunction = async function ({
     // Deploy Fallback Oracle
     const fallbackOracle = await deploy(FALLBACK_ORACLE_ID, {
       from: deployer,
-      args: [addressesProviderAddress, PRICE_STALE_THRESHOLD],
+      args: [],
       ...COMMON_DEPLOY_PARAMS,
       contract: "contracts/oracle/FallbackPriceOracle.sol:FallbackPriceOracle",
     });
@@ -68,11 +67,10 @@ const func: DeployFunction = async function ({
       sources,
       fallbackOracleAddress,
       ZERO_ADDRESS,
-      parseUnits("1", OracleQuoteUnit),
-      PRICE_STALE_THRESHOLD
+      parseUnits("1", OracleQuoteUnit)
     ],
     ...COMMON_DEPLOY_PARAMS,
-    contract: "contracts/oracle/AaveOracle.sol:AaveOracle",
+    contract: "AaveOracle",
   });
 
   return true;

@@ -35,7 +35,6 @@ export const MAX_UINT_AMOUNT =
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const ONE_ADDRESS = "0x0000000000000000000000000000000000000001";
 export const AAVE_REFERRAL = "0";
-export const PRICE_STALE_THRESHOLD = "60"; // 60 seconds
 
 export const WRAPPED_NATIVE_TOKEN_PER_NETWORK: { [network: string]: string } = {
   [eEthereumNetwork.kovan]: ZERO_ADDRESS,
@@ -151,8 +150,8 @@ export const POOL_ADMIN: Record<string, string> = {
   [eBaseNetwork.base]: "0xA9F30e6ED4098e9439B2ac8aEA2d3fc26BcEbb45",
   [eBaseNetwork.baseGoerli]: "0xA9F30e6ED4098e9439B2ac8aEA2d3fc26BcEbb45",
   [eEthereumNetwork.tenderly]: ETHEREUM_SHORT_EXECUTOR,
-  [eBobNetwork.testnet_old]: "0xb7ba1Dea4a3745e58959a2091b47096cc197be5A",
-  [eBobNetwork.testnet]: "0xb7ba1Dea4a3745e58959a2091b47096cc197be5A",
+  [eBobNetwork.testnet_old]: "0x7aF08613Bd9E2111EbA13a2d5d08a9A0cF4d3307",
+  [eBobNetwork.testnet]: "0x7aF08613Bd9E2111EbA13a2d5d08a9A0cF4d3307",
 };
 
 export const EMERGENCY_ADMIN: Record<string, string> = {

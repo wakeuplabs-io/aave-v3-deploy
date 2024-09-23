@@ -414,12 +414,12 @@ export const deployRedstoneAggregators = async (
 
       for (const [key, asset] of Object.entries(assets)) {
         const res = await deploy(`${key}${TESTNET_PRICE_AGGR_PREFIX}`, {
+          ...COMMON_DEPLOY_PARAMS,
           from: deployer,
           args: [
             redstoneAggregatorAddress,
             asset
           ],
-          ...COMMON_DEPLOY_PARAMS,
           contract: "contracts/dependencies/redstone/AggregatorRedStone.sol:AggregatorRedstone",
         });
 
