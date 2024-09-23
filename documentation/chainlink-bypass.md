@@ -1,3 +1,23 @@
+# Chainlink Bypass
+
+Aave relies on Chainlink oracles by default, requiring specific contract addresses to configure and deploy the UIPoolDataProvider. The following configuration defines the required contract addresses:
+
+```typescript
+// src/helpers/contants.ts
+export const chainlinkAggregatorProxy: Record<string, string> = {
+}
+
+export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
+}
+```
+
+To enable the use of UIPoolDataProvider without relying on Chainlink, a mock contract has been implemented to bypass the requirement for live Chainlink data. This contract acts as a placeholder during deployment, emulating the behavior of a Chainlink aggregator.
+
+## EACAggregatorProxy Contract
+
+The EACAggregatorProxy contract mimics the behavior of a Chainlink proxy, managing and retrieving the latest price-related data. It is necessary to deploy UiPoolDataProviderV3 and UiIncentiveDataProviderV3 without requiring a live connection to Chainlink.
+
+```
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
@@ -76,3 +96,37 @@ contract EACAggregatorProxy {
     /// @param startedBy The address that started the new round
     event NewRound(uint256 indexed roundId, address indexed startedBy);
 }
+```
+
+### Important Considerations
+
+- **Data Simulation:** The contract provides static or placeholder data as it is not connected to a live oracle. Some responses from UIPoolDataProvider might contain empty or placeholder data fields.
+- **Customization:** Placeholder functions (getAnswer, getTimestamp) are available for further development if you wish to simulate round-specific data retrieval.
+
+
+## UIPoolDataProvider
+
+The following fields in UIPoolDataProvider are impacted by the Chainlink bypass implementation:
+
+```typescript
+baseCurrencyInfo.networkBaseTokenPriceInUsd = networkBaseTokenPriceInUsdProxyAggregator
+      .latestAnswer();
+    baseCurrencyInfo.networkBaseTokenPriceDecimals = networkBaseTokenPriceInUsdProxyAggregator
+      .decimals();
+
+baseCurrencyInfo
+  .marketReferenceCurrencyPriceInUsd = marketReferenceCurrencyPriceInUsdProxyAggregator
+  .latestAnswer();
+```
+
+### Affected Fields
+**networkBaseTokenPriceInUsd:** This field retrieves the latest price of the base token in USD using the latestAnswer() function from the mock networkBaseTokenPriceInUsdProxyAggregator. This value will be a placeholder since the aggregator is not connected to a live oracle.
+
+**networkBaseTokenPriceDecimals:** The number of decimal places for the base token price is obtained from the decimals() function of the mock aggregator. This value will remain constant as defined in the mock contract.
+
+**marketReferenceCurrencyPriceInUsd:** Similar to the base token price, this field fetches the latest price of the market reference currency in USD from the latestAnswer() function of the marketReferenceCurrencyPriceInUsdProxyAggregator, which also provides a placeholder value.
+
+
+## Useful links
+
+- [UIPoolDataProviderV3](https://github.com/aave/aave-v3-periphery/blob/803c3e7d6d1c6da8d91411f4d085494f7189ea0b/contracts/misc/UiPoolDataProviderV3.sol#L22): Implementation of UIpoolDataProvider and uses of the aggregators.
