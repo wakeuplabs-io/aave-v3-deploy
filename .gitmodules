@@ -1,6 +1,3 @@
-[submodule "docu"]
-	path = docu
-	url = https://github.com/wakeuplabs-io/aave-protocol-doc.git
 [submodule "documentation"]
 	path = documentation
 	url = https://github.com/wakeuplabs-io/aave-protocol-doc.git
