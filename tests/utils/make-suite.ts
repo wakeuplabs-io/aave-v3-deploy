@@ -279,7 +279,7 @@ export async function ititializeOracle() {
   );
 
   const fallbackOracle = (await ethers.getContractAt(
-    "contracts/oracle/PriceOracle.sol:PriceOracle",
+    "contracts/oracle/FallbackPriceOracle.sol:FallbackPriceOracle",
     addressesfallbackOracle.address
   )) as IPriceOracle;
 

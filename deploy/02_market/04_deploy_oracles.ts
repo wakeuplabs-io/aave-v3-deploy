@@ -43,7 +43,7 @@ const func: DeployFunction = async function ({
       from: deployer,
       args: [],
       ...COMMON_DEPLOY_PARAMS,
-      contract: "contracts/oracle/PriceOracle.sol:PriceOracle",
+      contract: "contracts/oracle/FallbackPriceOracle.sol:FallbackPriceOracle",
     });
   
   const fallbackOracleAddress = fallbackOracle.address;
