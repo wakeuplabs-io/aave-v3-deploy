@@ -48,7 +48,7 @@ export const WRAPPED_NATIVE_TOKEN_PER_NETWORK: { [network: string]: string } = {
   [eHarmonyNetwork.main]: "0xcF664087a5bB0237a0BAd6742852ec6c8d69A27a",
   [ePolygonNetwork.polygon]: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
   [eBobNetwork.testnet_old]: "0x5546cB953770BA6Aa78FdbaEFB3450F87d97dDBC",
-  [eBobNetwork.testnet]: "0x8CEc2719a2e896A11eA3f10406EfDb6Ad87281D9",
+  [eBobNetwork.testnet]: "0x327E7E4A9e054ecC67dFa9E3Af158347116321Bf",
 };
 
 export const ZERO_BYTES_32 =
