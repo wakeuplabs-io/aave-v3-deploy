@@ -1,0 +1,36 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/chainlinkBypass/EAC.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.9;\n\n/// @title EACAggregatorProxy Contract\n/// @notice This contract acts as a bypass of a chainlink proxy to manage and retrieve the latest price-related data.\n/// @dev This contract stores the latest answer, round ID, and timestamp. It also includes placeholder functions for round-specific data retrieval.\n/// @dev This contract is deployed to deploy UiPoolDataProviderV3 and UiIncentiveDataProviderV3\ncontract EACAggregatorProxy {\n    /// @notice The number of decimals used for the price data\n    uint8 private constant DECIMALS = 18;\n\n    /// @dev Stores the latest price value\n    int256 private latestAnswerValue;\n\n    /// @dev Stores the latest round ID\n    uint256 private latestRoundId;\n\n    /// @dev Stores the timestamp of the latest update\n    uint256 private latestTimestampValue;\n\n    /// @notice Initializes the contract with a default latest answer value\n    constructor() {\n        latestAnswerValue = int256(2 * 10 ** DECIMALS); // Default initial value\n    }\n\n    /// @notice Returns the number of decimals used by the aggregator\n    /// @return The number of decimals (18)\n    function decimals() external view returns (uint8) {\n        return DECIMALS;\n    }\n\n    /// @notice Returns the latest price value\n    /// @return The latest answer as an `int256`\n    function latestAnswer() external view returns (int256) {\n        return latestAnswerValue;\n    }\n\n    /// @notice Returns the timestamp of the latest update\n    /// @return The latest timestamp as a `uint256`\n    function latestTimestamp() external view returns (uint256) {\n        return latestTimestampValue;\n    }\n\n    /// @notice Returns the latest round ID\n    /// @return The latest round ID as a `uint256`\n    function latestRound() external view returns (uint256) {\n        return latestRoundId;\n    }\n\n    /// @notice Retrieves the price value for a specific round ID\n    /// @dev This is a placeholder function. The actual implementation should fetch the correct value.\n    /// @param roundId The ID of the round to query\n    /// @return The answer for the given round ID (currently returns 0)\n    function getAnswer(uint256 roundId) external view returns (int256) {\n        // Implement the logic to retrieve the answer for a specific roundId\n        return 0; // Replace with actual logic\n    }\n\n    /// @notice Retrieves the timestamp for a specific round ID\n    /// @dev This is a placeholder function. The actual implementation should fetch the correct timestamp.\n    /// @param roundId The ID of the round to query\n    /// @return The timestamp for the given round ID (currently returns 0)\n    function getTimestamp(uint256 roundId) external view returns (uint256) {\n        // Implement the logic to retrieve the timestamp for a specific roundId\n        return 0; // Replace with actual logic\n    }\n\n    /// @notice Emitted when the answer is updated\n    /// @param current The updated answer\n    /// @param roundId The round ID associated with the update\n    /// @param timestamp The timestamp when the update occurred\n    event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 timestamp);\n\n    /// @notice Emitted when a new round starts\n    /// @param roundId The ID of the new round\n    /// @param startedBy The address that started the new round\n    event NewRound(uint256 indexed roundId, address indexed startedBy);\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 100000
+    },
+    "evmVersion": "berlin",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

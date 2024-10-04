@@ -1,0 +1,314 @@
+{
+  "address": "0x21fD55709e1727AA77059EdEE583285e8D5C45d4",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "int256",
+          "name": "current",
+          "type": "int256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "AnswerUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "startedBy",
+          "type": "address"
+        }
+      ],
+      "name": "NewRound",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAnswer",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "roundId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestAnswer",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestRound",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestTimestamp",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xfbeafdbb8aa8b6c773e39d613a440214c1ea30ee03443288b448692147f94dfa",
+  "receipt": {
+    "to": null,
+    "from": "0x7aF08613Bd9E2111EbA13a2d5d08a9A0cF4d3307",
+    "contractAddress": "0x21fD55709e1727AA77059EdEE583285e8D5C45d4",
+    "transactionIndex": 1,
+    "gasUsed": "136320",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x2231d8e1c61d647f3edbf1464eef8b47afda877bfd5e00297c6653509eec0a0d",
+    "transactionHash": "0xfbeafdbb8aa8b6c773e39d613a440214c1ea30ee03443288b448692147f94dfa",
+    "logs": [],
+    "blockNumber": 2771782,
+    "cumulativeGasUsed": "180150",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "46eb4441837be6519e8d27ce654b390b",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"int256\",\"name\":\"current\",\"type\":\"int256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"AnswerUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"startedBy\",\"type\":\"address\"}],\"name\":\"NewRound\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getAnswer\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"roundId\",\"type\":\"uint256\"}],\"name\":\"getTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestAnswer\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestRound\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"latestTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"This contract stores the latest answer, round ID, and timestamp. It also includes placeholder functions for round-specific data retrieval.This contract is deployed to deploy UiPoolDataProviderV3 and UiIncentiveDataProviderV3\",\"events\":{\"AnswerUpdated(int256,uint256,uint256)\":{\"params\":{\"current\":\"The updated answer\",\"roundId\":\"The round ID associated with the update\",\"timestamp\":\"The timestamp when the update occurred\"}},\"NewRound(uint256,address)\":{\"params\":{\"roundId\":\"The ID of the new round\",\"startedBy\":\"The address that started the new round\"}}},\"kind\":\"dev\",\"methods\":{\"decimals()\":{\"returns\":{\"_0\":\"The number of decimals (18)\"}},\"getAnswer(uint256)\":{\"details\":\"This is a placeholder function. The actual implementation should fetch the correct value.\",\"params\":{\"roundId\":\"The ID of the round to query\"},\"returns\":{\"_0\":\"The answer for the given round ID (currently returns 0)\"}},\"getTimestamp(uint256)\":{\"details\":\"This is a placeholder function. The actual implementation should fetch the correct timestamp.\",\"params\":{\"roundId\":\"The ID of the round to query\"},\"returns\":{\"_0\":\"The timestamp for the given round ID (currently returns 0)\"}},\"latestAnswer()\":{\"returns\":{\"_0\":\"The latest answer as an `int256`\"}},\"latestRound()\":{\"returns\":{\"_0\":\"The latest round ID as a `uint256`\"}},\"latestTimestamp()\":{\"returns\":{\"_0\":\"The latest timestamp as a `uint256`\"}}},\"stateVariables\":{\"latestAnswerValue\":{\"details\":\"Stores the latest price value\"},\"latestRoundId\":{\"details\":\"Stores the latest round ID\"},\"latestTimestampValue\":{\"details\":\"Stores the timestamp of the latest update\"}},\"title\":\"EACAggregatorProxy Contract\",\"version\":1},\"userdoc\":{\"events\":{\"AnswerUpdated(int256,uint256,uint256)\":{\"notice\":\"Emitted when the answer is updated\"},\"NewRound(uint256,address)\":{\"notice\":\"Emitted when a new round starts\"}},\"kind\":\"user\",\"methods\":{\"constructor\":{\"notice\":\"Initializes the contract with a default latest answer value\"},\"decimals()\":{\"notice\":\"Returns the number of decimals used by the aggregator\"},\"getAnswer(uint256)\":{\"notice\":\"Retrieves the price value for a specific round ID\"},\"getTimestamp(uint256)\":{\"notice\":\"Retrieves the timestamp for a specific round ID\"},\"latestAnswer()\":{\"notice\":\"Returns the latest price value\"},\"latestRound()\":{\"notice\":\"Returns the latest round ID\"},\"latestTimestamp()\":{\"notice\":\"Returns the timestamp of the latest update\"}},\"notice\":\"This contract acts as a bypass of a chainlink proxy to manage and retrieve the latest price-related data.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/chainlinkBypass/EAC.sol\":\"EACAggregatorProxy\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":100000},\"remappings\":[]},\"sources\":{\"contracts/chainlinkBypass/EAC.sol\":{\"content\":\"// SPDX-License-Identifier: UNLICENSED\\npragma solidity ^0.8.9;\\n\\n/// @title EACAggregatorProxy Contract\\n/// @notice This contract acts as a bypass of a chainlink proxy to manage and retrieve the latest price-related data.\\n/// @dev This contract stores the latest answer, round ID, and timestamp. It also includes placeholder functions for round-specific data retrieval.\\n/// @dev This contract is deployed to deploy UiPoolDataProviderV3 and UiIncentiveDataProviderV3\\ncontract EACAggregatorProxy {\\n    /// @notice The number of decimals used for the price data\\n    uint8 private constant DECIMALS = 18;\\n\\n    /// @dev Stores the latest price value\\n    int256 private latestAnswerValue;\\n\\n    /// @dev Stores the latest round ID\\n    uint256 private latestRoundId;\\n\\n    /// @dev Stores the timestamp of the latest update\\n    uint256 private latestTimestampValue;\\n\\n    /// @notice Initializes the contract with a default latest answer value\\n    constructor() {\\n        latestAnswerValue = int256(2 * 10 ** DECIMALS); // Default initial value\\n    }\\n\\n    /// @notice Returns the number of decimals used by the aggregator\\n    /// @return The number of decimals (18)\\n    function decimals() external view returns (uint8) {\\n        return DECIMALS;\\n    }\\n\\n    /// @notice Returns the latest price value\\n    /// @return The latest answer as an `int256`\\n    function latestAnswer() external view returns (int256) {\\n        return latestAnswerValue;\\n    }\\n\\n    /// @notice Returns the timestamp of the latest update\\n    /// @return The latest timestamp as a `uint256`\\n    function latestTimestamp() external view returns (uint256) {\\n        return latestTimestampValue;\\n    }\\n\\n    /// @notice Returns the latest round ID\\n    /// @return The latest round ID as a `uint256`\\n    function latestRound() external view returns (uint256) {\\n        return latestRoundId;\\n    }\\n\\n    /// @notice Retrieves the price value for a specific round ID\\n    /// @dev This is a placeholder function. The actual implementation should fetch the correct value.\\n    /// @param roundId The ID of the round to query\\n    /// @return The answer for the given round ID (currently returns 0)\\n    function getAnswer(uint256 roundId) external view returns (int256) {\\n        // Implement the logic to retrieve the answer for a specific roundId\\n        return 0; // Replace with actual logic\\n    }\\n\\n    /// @notice Retrieves the timestamp for a specific round ID\\n    /// @dev This is a placeholder function. The actual implementation should fetch the correct timestamp.\\n    /// @param roundId The ID of the round to query\\n    /// @return The timestamp for the given round ID (currently returns 0)\\n    function getTimestamp(uint256 roundId) external view returns (uint256) {\\n        // Implement the logic to retrieve the timestamp for a specific roundId\\n        return 0; // Replace with actual logic\\n    }\\n\\n    /// @notice Emitted when the answer is updated\\n    /// @param current The updated answer\\n    /// @param roundId The round ID associated with the update\\n    /// @param timestamp The timestamp when the update occurred\\n    event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 timestamp);\\n\\n    /// @notice Emitted when a new round starts\\n    /// @param roundId The ID of the new round\\n    /// @param startedBy The address that started the new round\\n    event NewRound(uint256 indexed roundId, address indexed startedBy);\\n}\\n\",\"keccak256\":\"0x2f7003bac8b2633e830d72a1867ef91faadbe4c0ebebb3ef39acc0c2e22cf6c8\",\"license\":\"UNLICENSED\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061001d6012600a61012c565b610028906002610142565b600055610161565b634e487b7160e01b600052601160045260246000fd5b600181815b8085111561008157816000190482111561006757610067610030565b8085161561007457918102915b93841c939080029061004b565b509250929050565b60008261009857506001610126565b816100a557506000610126565b81600181146100bb57600281146100c5576100e1565b6001915050610126565b60ff8411156100d6576100d6610030565b50506001821b610126565b5060208310610133831016604e8410600b8410161715610104575081810a610126565b61010e8383610046565b806000190482111561012257610122610030565b0290505b92915050565b600061013b60ff841683610089565b9392505050565b600081600019048311821515161561015c5761015c610030565b500290565b610100806101706000396000f3fe6080604052348015600f57600080fd5b506004361060695760003560e01c80638205bf6a11604a5780638205bf6a14609a578063b5ab58dc1460a1578063b633620c1460a157600080fd5b8063313ce56714606e57806350d25bcd146082578063668a0f02146093575b600080fd5b604051601281526020015b60405180910390f35b6000545b6040519081526020016079565b6001546086565b6002546086565b608660ac36600460b2565b50600090565b60006020828403121560c357600080fd5b503591905056fea26469706673582212205eec5880276702077472526589165ed23051a7b9783baf9e0932a2a2082e4b7464736f6c634300080a0033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060695760003560e01c80638205bf6a11604a5780638205bf6a14609a578063b5ab58dc1460a1578063b633620c1460a157600080fd5b8063313ce56714606e57806350d25bcd146082578063668a0f02146093575b600080fd5b604051601281526020015b60405180910390f35b6000545b6040519081526020016079565b6001546086565b6002546086565b608660ac36600460b2565b50600090565b60006020828403121560c357600080fd5b503591905056fea26469706673582212205eec5880276702077472526589165ed23051a7b9783baf9e0932a2a2082e4b7464736f6c634300080a0033",
+  "devdoc": {
+    "details": "This contract stores the latest answer, round ID, and timestamp. It also includes placeholder functions for round-specific data retrieval.This contract is deployed to deploy UiPoolDataProviderV3 and UiIncentiveDataProviderV3",
+    "events": {
+      "AnswerUpdated(int256,uint256,uint256)": {
+        "params": {
+          "current": "The updated answer",
+          "roundId": "The round ID associated with the update",
+          "timestamp": "The timestamp when the update occurred"
+        }
+      },
+      "NewRound(uint256,address)": {
+        "params": {
+          "roundId": "The ID of the new round",
+          "startedBy": "The address that started the new round"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "decimals()": {
+        "returns": {
+          "_0": "The number of decimals (18)"
+        }
+      },
+      "getAnswer(uint256)": {
+        "details": "This is a placeholder function. The actual implementation should fetch the correct value.",
+        "params": {
+          "roundId": "The ID of the round to query"
+        },
+        "returns": {
+          "_0": "The answer for the given round ID (currently returns 0)"
+        }
+      },
+      "getTimestamp(uint256)": {
+        "details": "This is a placeholder function. The actual implementation should fetch the correct timestamp.",
+        "params": {
+          "roundId": "The ID of the round to query"
+        },
+        "returns": {
+          "_0": "The timestamp for the given round ID (currently returns 0)"
+        }
+      },
+      "latestAnswer()": {
+        "returns": {
+          "_0": "The latest answer as an `int256`"
+        }
+      },
+      "latestRound()": {
+        "returns": {
+          "_0": "The latest round ID as a `uint256`"
+        }
+      },
+      "latestTimestamp()": {
+        "returns": {
+          "_0": "The latest timestamp as a `uint256`"
+        }
+      }
+    },
+    "stateVariables": {
+      "latestAnswerValue": {
+        "details": "Stores the latest price value"
+      },
+      "latestRoundId": {
+        "details": "Stores the latest round ID"
+      },
+      "latestTimestampValue": {
+        "details": "Stores the timestamp of the latest update"
+      }
+    },
+    "title": "EACAggregatorProxy Contract",
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "AnswerUpdated(int256,uint256,uint256)": {
+        "notice": "Emitted when the answer is updated"
+      },
+      "NewRound(uint256,address)": {
+        "notice": "Emitted when a new round starts"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "constructor": {
+        "notice": "Initializes the contract with a default latest answer value"
+      },
+      "decimals()": {
+        "notice": "Returns the number of decimals used by the aggregator"
+      },
+      "getAnswer(uint256)": {
+        "notice": "Retrieves the price value for a specific round ID"
+      },
+      "getTimestamp(uint256)": {
+        "notice": "Retrieves the timestamp for a specific round ID"
+      },
+      "latestAnswer()": {
+        "notice": "Returns the latest price value"
+      },
+      "latestRound()": {
+        "notice": "Returns the latest round ID"
+      },
+      "latestTimestamp()": {
+        "notice": "Returns the timestamp of the latest update"
+      }
+    },
+    "notice": "This contract acts as a bypass of a chainlink proxy to manage and retrieve the latest price-related data.",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 9,
+        "contract": "contracts/chainlinkBypass/EAC.sol:EACAggregatorProxy",
+        "label": "latestAnswerValue",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_int256"
+      },
+      {
+        "astId": 12,
+        "contract": "contracts/chainlinkBypass/EAC.sol:EACAggregatorProxy",
+        "label": "latestRoundId",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 15,
+        "contract": "contracts/chainlinkBypass/EAC.sol:EACAggregatorProxy",
+        "label": "latestTimestampValue",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_int256": {
+        "encoding": "inplace",
+        "label": "int256",
+        "numberOfBytes": "32"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
