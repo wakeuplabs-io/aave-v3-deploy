@@ -113,11 +113,11 @@ Ensure that the new network is configured correctly by adding the following para
 ### `helpers/market-config-helpers.ts`
 ---
 
-1. **Add New Market Configuration in helpers/market-config-helpers.ts:** If a new market is required, it should be added here. The market configuration for bob has already been included.
+**Add New Market Configuration in helpers/market-config-helpers.ts:** If a new market is required, it should be added here. The market configuration for bob has already been included.
 
 ### `markets/aave/commons.ts`
 ---
-2. **Enable L2 Deployment Flag for the Pool:** Set the flag to deploy the pool for Layer 2 (L2) networks. This configuration is located in `markets/aave/commons.ts`.
+**Enable L2 Deployment Flag for the Pool:** Set the flag to deploy the pool for Layer 2 (L2) networks. This configuration is located in `markets/aave/commons.ts`.
 
 ### **Configure the New Market:**
 ---
@@ -209,7 +209,7 @@ export const strategyUSDC: IReserveParams = {
 
 ### Interest Rate Strategy Parameters
 
-![image](./assets/interest-rate-model.png)
+![image](./assets/interest-rate-strategy.png)
 
 - **Optimal Utilization Rate** (%):  
   _The optimal usage percentage of the pool to maintain ideal interest rates._
