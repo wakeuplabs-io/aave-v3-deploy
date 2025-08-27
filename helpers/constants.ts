@@ -1,5 +1,6 @@
 import { parseEther, parseUnits } from "ethers/lib/utils";
 import {
+  eAlpen,
   eArbitrumNetwork,
   eAvalancheNetwork,
   eBaseNetwork,
@@ -100,6 +101,7 @@ export const chainlinkAggregatorProxy: Record<string, string> = {
   goerli: "0x60E4B131f0F219c72b0346675283E73888e4AB24",
   [eArbitrumNetwork.goerliNitro]: "0xC09e69E79106861dF5d289dA88349f10e2dc6b5C",
   [eEthereumNetwork.sepolia]: "0x6c60d915c7a646860dba836ffcb7f112b6cfdc76",
+  [eAlpen.testnet]: '0xEef85103A388eB9509D8c8a7998529e4ba3ddaC7',
 };
 
 export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
@@ -123,6 +125,7 @@ export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
   goerli: "0x60E4B131f0F219c72b0346675283E73888e4AB24",
   [eArbitrumNetwork.goerliNitro]: "0xC09e69E79106861dF5d289dA88349f10e2dc6b5C",
   [eEthereumNetwork.sepolia]: "0x6c60d915c7a646860dba836ffcb7f112b6cfdc76",
+  [eAlpen.testnet]: '0xEef85103A388eB9509D8c8a7998529e4ba3ddaC7', // mock aggregator
 };
 
 export const ETHEREUM_SHORT_EXECUTOR =

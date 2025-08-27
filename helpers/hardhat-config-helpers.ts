@@ -12,6 +12,7 @@ import {
   eFantomNetwork,
   eOptimismNetwork,
   eBaseNetwork,
+  eAlpen,
 } from "./types";
 
 require("dotenv").config();
@@ -98,6 +99,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eBaseNetwork.base]: `https://base-mainnet.g.alchemy.com/v2/${getAlchemyKey(
     eBaseNetwork.base
   )}`,
+  [eAlpen.testnet]: 'https://rpc.testnet.alpenlabs.io',
 };
 
 export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {

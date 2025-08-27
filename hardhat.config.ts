@@ -15,6 +15,7 @@ import {
   eOptimismNetwork,
   ePolygonNetwork,
   eBaseNetwork,
+  eAlpen,
 } from "./helpers/types";
 import { DEFAULT_NAMED_ACCOUNTS } from "./helpers/constants";
 
@@ -127,6 +128,7 @@ export default {
       eBaseNetwork.baseGoerli,
       84531
     ),
+    [eAlpen.testnet]: getCommonNetworkConfig(eAlpen.testnet, 2892),
   },
   namedAccounts: {
     ...DEFAULT_NAMED_ACCOUNTS,
@@ -207,16 +209,18 @@ export default {
     ? DETERMINISTIC_FACTORIES
     : undefined,
   etherscan: {
-    apiKey: ETHERSCAN_KEY,
+    apiKey: {
+      'alpen-testnet': 'empty'
+    },
     customChains: [
       {
-        network: eBaseNetwork.base,
-        chainId: 8453,
+        network: 'alpen-testnet',
+        chainId: 2892,
         urls: {
-          apiURL: "https://api.basescan.org/api",
-          browserURL: "https://basescan.org/",
-        },
-      },
-    ],
-  },
+          apiURL: "https://explorer.testnet.alpenlabs.io/api",
+          browserURL: "https://explorer.testnet.alpenlabs.io:3000"
+        }
+      }
+    ]
+  }
 };
