@@ -59,7 +59,7 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
   DAI: parseUnits("1", 8).toString(),
   USDC: parseUnits("1", 8).toString(),
   USDT: parseUnits("1", 8).toString(),
-  WBTC: parseUnits("60000", 8).toString(),
+  WBTC: parseUnits("120000", 8).toString(),
   USD: parseUnits("1", 8).toString(),
   LINK: parseUnits("30", 8).toString(),
   CRV: parseUnits("6", 8).toString(),
@@ -78,6 +78,7 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
   JEUR: parseUnits("1.126", 8).toString(),
   DPI: parseUnits("149", 8).toString(),
   CBETH: parseUnits("4000", 8).toString(),
+  BTD: parseUnits("1", 8).toString(), // Mock price for BTD
 };
 
 export const chainlinkAggregatorProxy: Record<string, string> = {

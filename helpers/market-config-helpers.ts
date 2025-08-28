@@ -52,6 +52,7 @@ export enum ConfigNames {
   Ethereum = "Ethereum",
   Base = "Base",
   baseGoerli = "base-goerli",
+  alpenTestnet = "alpenTestnet",
 }
 
 export const getParamPerNetwork = <T>(
@@ -97,6 +98,8 @@ export const getAddressFromConfig = (
   return value;
 };
 
+import AlpenTestnetMarket from '../markets/alpenTestnet';
+
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
     case ConfigNames.Aave:
@@ -119,6 +122,8 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
       return EthereumV3Config;
     case ConfigNames.Base:
       return BaseConfig;
+    case ConfigNames.alpenTestnet:
+      return AlpenTestnetMarket;
     default:
       throw new Error(
         `Unsupported pool configuration: ${configName} is not one of the supported configs ${Object.values(

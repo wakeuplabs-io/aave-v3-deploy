@@ -49,6 +49,8 @@ task(`setup-e-modes`, `Setups e-modes from config`).setAction(
 
       for (let assetIndex in eMode.assets) {
         const asset = eMode.assets[assetIndex];
+        // Only process BTD and WBTC for AlpenTestnet
+        if (asset !== 'BTD' && asset !== 'WBTC') continue;
         const assetAddress = await getReserveAddress(config, asset);
         await waitForTx(
           await poolConfigurator.setAssetEModeCategory(assetAddress, eMode.id)
